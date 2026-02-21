@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Super Smash Bros Ultimate — FAQ</title>
+  <title>Super Smash Bros Ultimate — Ultimate Resource</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -19,13 +19,18 @@
     }
 
     @keyframes glow {
-      0%, 100% { text-shadow: 0 0 20px rgba(232, 185, 35, 0.5), 0 0 40px rgba(232, 185, 35, 0.3); }
-      50% { text-shadow: 0 0 30px rgba(232, 185, 35, 0.8), 0 0 60px rgba(232, 185, 35, 0.5); }
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5); }
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     :root {
@@ -42,11 +47,7 @@
       --border: #333344;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: "DM Sans", system-ui, sans-serif;
@@ -63,10 +64,8 @@
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: 
         radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(68, 136, 255, 0.1) 0%, transparent 50%),
@@ -77,7 +76,7 @@
 
     .hero {
       background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
-      padding: 3rem 1.5rem 4rem;
+      padding: 4rem 1.5rem 5rem;
       text-align: center;
       border-bottom: 3px solid var(--accent-gold);
       position: relative;
@@ -88,9 +87,7 @@
     .hero::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 100%;
       background: 
         radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 215, 0, 0.2) 0%, transparent 70%),
@@ -100,9 +97,14 @@
       animation: float 6s ease-in-out infinite;
     }
 
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
     h1 {
       font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-size: clamp(3rem, 10vw, 5rem);
       letter-spacing: 0.1em;
       background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
       background-size: 200% 200%;
@@ -116,157 +118,19 @@
     }
 
     .subtitle {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       color: var(--accent-blue);
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+      margin-bottom: 2rem;
     }
 
-    main {
-      max-width: 720px;
-      margin: -2rem auto 4rem;
-      padding: 0 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    footer {
-      position: relative;
-      z-index: 1;
-    }
-
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    details {
-      background: linear-gradient(135deg, rgba(26, 26, 36, 0.9) 0%, rgba(30, 30, 45, 0.9) 100%);
-      backdrop-filter: blur(10px);
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      z-index: 1;
-    }
-
-    details::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(68, 136, 255, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-    }
-
-    details:hover {
-      border-color: var(--accent-gold);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.1);
-    }
-
-    details:hover::before {
-      opacity: 1;
-    }
-
-    details[open] {
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 0 2px var(--accent-gold), 0 12px 40px rgba(255, 215, 0, 0.3);
-      transform: translateY(-2px);
-    }
-
-    details[open]::before {
-      opacity: 1;
-    }
-
-    summary {
-      font-weight: 700;
-      font-size: 1.1rem;
-      padding: 1.5rem 1.75rem;
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--text);
-      transition: color 0.3s;
-      position: relative;
-      z-index: 2;
-    }
-
-    summary:hover {
-      color: var(--accent-gold);
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    summary::after {
-      content: "➕";
-      font-size: 1.5rem;
-      color: var(--accent-gold);
-      flex-shrink: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
-    }
-
-    details[open] summary::after {
-      content: "➖";
-      transform: rotate(180deg);
-    }
-
-    .answer {
-      padding: 0 1.75rem 1.75rem;
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      animation: fadeIn 0.4s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .answer p {
-      margin-bottom: 0.75rem;
-    }
-
-    .answer p:last-child {
-      margin-bottom: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border);
-    }
-
-    footer a {
-      color: var(--accent-gold);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+    .hero-logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: float 4s ease-in-out infinite;
     }
 
     .nav {
@@ -274,6 +138,7 @@
       justify-content: center;
       gap: 1.5rem;
       margin-top: 1.5rem;
+      flex-wrap: wrap;
     }
 
     .nav a {
@@ -292,10 +157,8 @@
     .nav a::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
       transition: left 0.5s;
     }
@@ -307,99 +170,169 @@
       box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
     }
 
-    .nav a:hover::before {
-      left: 100%;
+    .nav a:hover::before { left: 100%; }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.95) 0%, rgba(30, 30, 45, 0.95) 100%);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: slideUp 0.6s ease-out backwards;
+    }
+
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .feature-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-card h2 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .feature-card.counter { border-top: 4px solid var(--accent-green); }
+    .feature-card.combos { border-top: 4px solid var(--accent-blue); }
+    .feature-card.tips { border-top: 4px solid var(--accent-purple); }
+    .feature-card.faq { border-top: 4px solid var(--accent-orange); }
+
+    .feature-card.counter h2 { color: var(--accent-green); }
+    .feature-card.combos h2 { color: var(--accent-blue); }
+    .feature-card.tips h2 { color: var(--accent-purple); }
+    .feature-card.faq h2 { color: var(--accent-orange); }
+
+    .hero-section {
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-bottom: 3rem;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    .hero-section h2 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2rem;
+      color: var(--accent-gold);
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-section p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a { color: var(--accent-gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .nav { gap: 0.75rem; }
+      .nav a { padding: 0.5rem 0.75rem; font-size: 0.85rem; }
+      .features-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header class="hero">
-    <h1>Super Smash Bros Ultimate</h1>
-    <p class="subtitle">Frequently Asked Questions</p>
-    <nav class="nav">
-      <a href="index.html">FAQ</a>
-      <a href="matchups.html">Counter picker</a>
-      <a href="combos.html">Combos & Moves</a>
-      <a href="tips.html">Tips & Tricks</a>
-    </nav>
+    <div class="hero-content">
+      <div class="hero-logo">🎮</div>
+      <h1>SMASH ULTIMATE</h1>
+      <p class="subtitle">Your Ultimate Resource</p>
+      <nav class="nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="matchups.html">Counter Picker</a>
+        <a href="combos.html">Combos & Moves</a>
+        <a href="tips.html">Tips & Tricks</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <div class="faq-list">
-      <details>
-        <summary>What is Super Smash Bros Ultimate?</summary>
-        <div class="answer">
-          <p>Super Smash Bros Ultimate is a crossover fighting game for the Nintendo Switch, released in December 2018. It features a huge roster of characters from Nintendo and many other game series, all battling on themed stages. The goal is to knock opponents off the stage and be the last one standing.</p>
-        </div>
-      </details>
+    <section class="hero-section">
+      <h2>Master Your Game</h2>
+      <p>Everything you need to improve your Super Smash Bros Ultimate gameplay. Find character matchups, combos, and expert strategies all in one place.</p>
+    </section>
 
-      <details>
-        <summary>How many characters are in the game?</summary>
-        <div class="answer">
-          <p>The base game includes over 70 fighters, and with DLC (Fighters Pass 1 and 2), the roster grows to more than 80 characters. It’s billed as “Everyone is here!” because it brings back every fighter that has ever appeared in a Smash Bros game, plus new additions.</p>
-        </div>
-      </details>
+    <div class="features-grid">
+      <a href="matchups.html" class="feature-card counter">
+        <span class="feature-icon">⚔️</span>
+        <h2>Counter Picker</h2>
+        <p>Find the best character matchups against your opponent. See which characters counter your opponent and which ones to avoid.</p>
+      </a>
 
-      <details>
-        <summary>What game modes are available?</summary>
-        <div class="answer">
-          <p>You can play Classic Mode (single-player arcade style), World of Light (adventure mode with a large map and spirits), Squad Strike, Tourney, Training, and more. There’s also local and online multiplayer: Quick Play, Elite Smash, and Battle Arenas for competitive or casual matches.</p>
-        </div>
-      </details>
+      <a href="combos.html" class="feature-card combos">
+        <span class="feature-icon">🔥</span>
+        <h2>Combos & Moves</h2>
+        <p>Learn character-specific combos, kill confirms, and move lists. Master your character's toolkit.</p>
+      </a>
 
-      <details>
-        <summary>What are Spirits and how do they work?</summary>
-        <div class="answer">
-          <p>Spirits are collectible power-ups that represent characters and items from other games. You equip them to your fighter to boost stats (attack, defense, etc.) and grant abilities. Primary Spirits have types (Attack, Grab, Shield) that interact in a rock-paper-scissors way. You collect them in World of Light, the Spirit Board, and the Shop.</p>
-        </div>
-      </details>
+      <a href="tips.html" class="feature-card tips">
+        <span class="feature-icon">💡</span>
+        <h2>Tips & Tricks</h2>
+        <p>Get expert strategies, neutral game tips, recovery advice, and general gameplay improvements.</p>
+      </a>
 
-      <details>
-        <summary>How does online play work?</summary>
-        <div class="answer">
-          <p>Online requires a Nintendo Switch Online subscription. Quick Play matches you with others based on your Global Smash Power (GSP). Elite Smash is for high-GSP players. Battle Arenas let you create or join rooms with custom rules. Note: matchmaking and stability can vary by region and connection.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Can I play with friends locally?</summary>
-        <div class="answer">
-          <p>Yes. You can play with up to 8 players locally on one Switch (with enough controllers), or link multiple Switch consoles for local wireless play. There’s no split-screen; everyone shares the same stage view, which stays manageable thanks to the camera zooming out as needed.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>What DLC is available?</summary>
-        <div class="answer">
-          <p>Fighters Pass Vol. 1 added 5 fighters (Joker, Hero, Banjo &amp; Kazooie, Terry, Byleth) plus stages and music. Fighters Pass Vol. 2 added 6 more (Min Min, Steve/Alex, Sephiroth, Pyra/Mythra, Kazuya, Sora) with their content. You can also buy individual fighter packs. DLC does not affect core gameplay for players who don’t own it.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>What’s the difference between stocks and time battles?</summary>
-        <div class="answer">
-          <p>In Stock mode, each player has a set number of lives (stocks). When you’re knocked out, you lose a stock; the last player with stock left wins. In Time mode, you play for a set duration and earn points for each knockout (and lose points for each death). The player with the most points when time runs out wins. Stock is common in competitive play; Time is often used for casual party play.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Is there a single-player story mode?</summary>
-        <div class="answer">
-          <p>Yes. World of Light is the main adventure. The world is taken over by spirits, and you free fighters and spirits on a large map, clearing battles and puzzles. It can take many hours to complete and is a major way to unlock and level up spirits.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>How do I unlock characters?</summary>
-        <div class="answer">
-          <p>New fighters are unlocked by playing through Classic Mode, meeting them in World of Light, or in the “Challenger Approaching” battles that appear after certain versus matches or play time. You can also unlock everyone quickly via the Games &amp; More → Challenges path or by replaying failed challenger battles in the same menu.</p>
-        </div>
-      </details>
+      <a href="faq.html" class="feature-card faq">
+        <span class="feature-icon">❓</span>
+        <h2>FAQ</h2>
+        <p>Answers to common questions about Super Smash Bros Ultimate. Game modes, mechanics, and more.</p>
+      </a>
     </div>
   </main>
 
   <footer>
-    <p>Super Smash Bros Ultimate &copy; Nintendo. This FAQ is fan-made and not affiliated with Nintendo.</p>
+    <p>Super Smash Bros Ultimate &copy; Nintendo. This site is fan-made and not affiliated with Nintendo.</p>
   </footer>
 </body>
 </html>
