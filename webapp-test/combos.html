@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combos & Moves — Super Smash Bros Ultimate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5); }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #1a1a24;
+      --accent-gold: #ffd700;
+      --accent-red: #ff4444;
+      --accent-green: #44ff88;
+      --accent-blue: #4488ff;
+      --accent-purple: #aa44ff;
+      --accent-pink: #ff44aa;
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+      --border: #333344;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0a0a0f 100%);
+      background-size: 200% 200%;
+      animation: gradient-shift 15s ease infinite;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(68, 136, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(170, 68, 255, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-gold);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 215, 0, 0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 100%, rgba(68, 136, 255, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(170, 68, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+      position: relative;
+      animation: glow 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--accent-blue);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover {
+      color: var(--accent-gold);
+      background: rgba(255, 215, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .picker-section {
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.95) 0%, rgba(30, 30, 45, 0.95) 100%);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+    }
+
+    .picker-section:hover {
+      border-color: var(--accent-gold);
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .picker-section label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .searchable-dropdown {
+      position: relative;
+      max-width: 400px;
+    }
+
+    .dropdown-input {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      background: rgba(10, 10, 15, 0.8);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: text;
+      transition: all 0.3s;
+    }
+
+    .dropdown-input:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      background: rgba(10, 10, 15, 0.95);
+    }
+
+    .dropdown-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.98) 0%, rgba(30, 30, 45, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--accent-gold);
+      border-radius: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .dropdown-list.visible {
+      display: block;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .dropdown-option {
+      padding: 0.875rem 1.25rem;
+      cursor: pointer;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    .dropdown-option:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-option:hover,
+    .dropdown-option.highlighted {
+      background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+      color: var(--accent-gold);
+      transform: translateX(5px);
+    }
+
+    .dropdown-empty {
+      padding: 0.875rem 1.25rem;
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.visible {
+      display: block;
+    }
+
+    .content-section {
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.95) 0%, rgba(30, 30, 45, 0.95) 100%);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .content-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .content-section h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--accent-purple);
+      text-shadow: 0 0 10px rgba(170, 68, 255, 0.5);
+    }
+
+    .combo-item {
+      background: linear-gradient(135deg, rgba(10, 10, 15, 0.8) 0%, rgba(20, 20, 30, 0.8) 100%);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+    }
+
+    .combo-item:hover {
+      border-color: var(--accent-gold);
+      transform: translateX(5px);
+      box-shadow: 0 6px 25px rgba(255, 215, 0, 0.3);
+    }
+
+    .combo-input {
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .combo-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .move-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .move-item {
+      background: linear-gradient(135deg, rgba(10, 10, 15, 0.8) 0%, rgba(20, 20, 30, 0.8) 100%);
+      border: 2px solid rgba(68, 136, 255, 0.3);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(68, 136, 255, 0.1);
+    }
+
+    .move-item:hover {
+      border-color: var(--accent-blue);
+      transform: translateX(5px);
+      box-shadow: 0 6px 25px rgba(68, 136, 255, 0.3);
+    }
+
+    .move-name {
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+    }
+
+    .move-input {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .move-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--accent-gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>Combos & Moves</h1>
+    <p class="subtitle">Learn character combos and move inputs</p>
+    <nav class="nav">
+      <a href="index.html">FAQ</a>
+      <a href="matchups.html">Counter picker</a>
+      <a href="combos.html">Combos & Moves</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="picker-section">
+      <label for="character">Select character</label>
+      <div class="searchable-dropdown" id="character-dropdown">
+        <input
+          type="text"
+          id="character"
+          class="dropdown-input"
+          placeholder="Search for character..."
+          autocomplete="off"
+        />
+        <div class="dropdown-list" id="dropdown-list"></div>
+      </div>
+    </section>
+
+    <div class="content" id="content">
+      <section class="content-section">
+        <h2 id="character-name">Character Combos</h2>
+        <div id="combos"></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Move List</h2>
+        <div id="moves"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>Combo data is for reference. Super Smash Bros Ultimate &copy; Nintendo.</p>
+  </footer>
+
+  <script>
+    // Character list (sorted alphabetically)
+    const CHARACTERS = [
+      'Mario', 'Donkey Kong', 'Link', 'Samus', 'Yoshi', 'Kirby', 'Fox', 'Pikachu',
+      'Luigi', 'Ness', 'Captain Falcon', 'Jigglypuff', 'Peach', 'Bowser', 'Ice Climbers',
+      'Sheik', 'Zelda', 'Dr. Mario', 'Pichu', 'Falco', 'Marth', 'Lucina', 'Young Link',
+      'Ganondorf', 'Mewtwo', 'Roy', 'Chrom', 'Mr. Game & Watch', 'Meta Knight', 'Pit',
+      'Dark Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'Squirtle', 'Ivysaur', 'Charizard',
+      'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B.',
+      'Toon Link', 'Wolf', 'Villager', 'Mega Man', 'Wii Fit Trainer', 'Rosalina', 'Little Mac',
+      'Greninja', 'Palutena', 'Pac-Man', 'Robin', 'Shulk', 'Bowser Jr.', 'Duck Hunt',
+      'Ryu', 'Ken', 'Cloud', 'Corrin', 'Bayonetta', 'Inkling', 'Ridley', 'Simon', 'Richter',
+      'King K. Rool', 'Isabelle', 'Incineroar', 'Joker', 'Hero', 'Banjo & Kazooie', 'Terry',
+      'Byleth', 'Min Min', 'Steve', 'Sephiroth', 'Pyra / Mythra', 'Kazuya', 'Sora'
+    ].sort((a, b) => a.localeCompare(b));
+
+    // Combo and move data for characters
+    const COMBO_DATA = {
+      'Mario': {
+        combos: [
+          { input: 'Down Throw → Up Tilt → Up Air', desc: 'Basic combo starter. Works at low to mid percents. Can extend with more up-airs.' },
+          { input: 'Down Throw → Forward Air', desc: 'Simple kill confirm at higher percents near the edge.' },
+          { input: 'Up Tilt → Up Air → Up Air', desc: 'Aerial combo chain. Can kill at high percents.' },
+          { input: 'Down Throw → Up Smash', desc: 'Kill confirm at high percents (around 120%+).' }
+        ],
+        moves: [
+          { name: 'Fireball', input: 'Neutral B', desc: 'Projectile for zoning and approach. Can be used to pressure shields.' },
+          { name: 'Cape', input: 'Side B', desc: 'Reflects projectiles and reverses opponents. Useful for edgeguarding.' },
+          { name: 'Super Jump Punch', input: 'Up B', desc: 'Recovery move with invincibility frames. Can be used as an out-of-shield option.' },
+          { name: 'F.L.U.D.D.', input: 'Down B', desc: 'Water spray that pushes opponents. Useful for edgeguarding.' }
+        ]
+      },
+      'Pikachu': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo. Can extend with quick attack or more aerials.' },
+          { input: 'Down Throw → Up Air → Up Air', desc: 'Aerial chain combo. Can kill at high percents.' },
+          { input: 'Up Tilt → Up Air → Quick Attack', desc: 'Advanced combo requiring quick attack cancel. High damage.' },
+          { input: 'Down Throw → Thunder', desc: 'Kill confirm at very high percents (150%+).' }
+        ],
+        moves: [
+          { name: 'Thunder Jolt', input: 'Neutral B', desc: 'Projectile that travels along ground and platforms. Good for pressure.' },
+          { name: 'Skull Bash', input: 'Side B', desc: 'Horizontal recovery move. Can be used as a burst option.' },
+          { name: 'Quick Attack', input: 'Up B', desc: 'Excellent recovery with two directional inputs. Can be used for movement.' },
+          { name: 'Thunder', input: 'Down B', desc: 'Lightning strike from above. Can spike opponents off-stage.' }
+        ]
+      },
+      'Fox': {
+        combos: [
+          { input: 'Up Throw → Up Air', desc: 'Basic kill confirm. Works at high percents.' },
+          { input: 'Down Tilt → Forward Air', desc: 'Combo starter. Can extend with more aerials.' },
+          { input: 'Up Tilt → Up Air → Up Air', desc: 'Aerial combo chain. High damage output.' },
+          { input: 'Down Throw → Forward Air', desc: 'Combo at low to mid percents.' }
+        ],
+        moves: [
+          { name: 'Blaster', input: 'Neutral B', desc: 'Rapid-fire projectile. Can be used for pressure and edgeguarding.' },
+          { name: 'Fox Illusion', input: 'Side B', desc: 'Horizontal recovery move. Can be used for movement.' },
+          { name: 'Fire Fox', input: 'Up B', desc: 'Recovery move with fire damage. Can be angled.' },
+          { name: 'Reflector', input: 'Down B', desc: 'Reflects projectiles and can be used as a combo tool.' }
+        ]
+      },
+      'Marth': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo. Works better with tipper hits.' },
+          { input: 'Up Tilt → Up Air', desc: 'Aerial combo. Tipper hits deal more damage.' },
+          { input: 'Down Tilt → Forward Smash', desc: 'Kill confirm with tipper forward smash.' },
+          { input: 'Neutral Air → Forward Air', desc: 'Aerial combo chain.' }
+        ],
+        moves: [
+          { name: 'Shield Breaker', input: 'Neutral B', desc: 'Charges to break shields. Tipper deals massive damage.' },
+          { name: 'Dancing Blade', input: 'Side B', desc: 'Multi-hit combo move. Can be used in different directions.' },
+          { name: 'Dolphin Slash', input: 'Up B', desc: 'Recovery move with invincibility frames. Good out-of-shield option.' },
+          { name: 'Counter', input: 'Down B', desc: 'Counters attacks. Timing is crucial.' }
+        ]
+      },
+      'Lucina': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo. Consistent damage without tipper mechanic.' },
+          { input: 'Up Tilt → Up Air', desc: 'Aerial combo chain.' },
+          { input: 'Down Tilt → Forward Smash', desc: 'Kill confirm at high percents.' },
+          { input: 'Neutral Air → Forward Air', desc: 'Aerial combo.' }
+        ],
+        moves: [
+          { name: 'Shield Breaker', input: 'Neutral B', desc: 'Charges to break shields. Consistent damage.' },
+          { name: 'Dancing Blade', input: 'Side B', desc: 'Multi-hit combo move. Can be used in different directions.' },
+          { name: 'Dolphin Slash', input: 'Up B', desc: 'Recovery move with invincibility frames. Good out-of-shield option.' },
+          { name: 'Counter', input: 'Down B', desc: 'Counters attacks. Timing is crucial.' }
+        ]
+      },
+      'Joker': {
+        combos: [
+          { input: 'Down Throw → Up Air', desc: 'Basic combo. Works better with Arsene.' },
+          { input: 'Down Throw → Forward Air → Down Gun', desc: 'Advanced combo using gun for extension.' },
+          { input: 'Up Tilt → Up Air → Up Air', desc: 'Aerial combo chain. High damage with Arsene.' },
+          { input: 'Down Throw → Back Air', desc: 'Kill confirm at high percents with Arsene.' }
+        ],
+        moves: [
+          { name: 'Gun', input: 'Neutral B', desc: 'Rapid-fire projectiles. Can be used for edgeguarding and combos.' },
+          { name: 'Eiha / Eigaon', input: 'Side B', desc: 'Curse projectile. Eigaon with Arsene is stronger.' },
+          { name: 'Grappling Hook', input: 'Up B', desc: 'Recovery move that can grab ledges from far away.' },
+          { name: 'Rebel\'s Guard', input: 'Down B', desc: 'Absorbs damage to build meter for Arsene. Can counter if timed right.' }
+        ]
+      },
+      'Cloud': {
+        combos: [
+          { input: 'Down Throw → Up Air', desc: 'Basic combo. Works better with Limit.' },
+          { input: 'Up Tilt → Up Air', desc: 'Aerial combo chain.' },
+          { input: 'Down Tilt → Forward Smash', desc: 'Kill confirm at high percents.' },
+          { input: 'Limit Cross Slash (Limit + Side B)', desc: 'Powerful multi-hit attack when Limit is active.' }
+        ],
+        moves: [
+          { name: 'Blade Beam', input: 'Neutral B', desc: 'Projectile that travels along ground. Limit version is stronger.' },
+          { name: 'Cross Slash', input: 'Side B', desc: 'Multi-hit combo move. Limit version is much stronger.' },
+          { name: 'Climhazzard', input: 'Up B', desc: 'Recovery move with multiple hits. Limit version has more range.' },
+          { name: 'Finishing Touch', input: 'Limit + Down B', desc: 'Powerful kill move when Limit is active.' }
+        ]
+      },
+      'Sephiroth': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo. Works at various percents.' },
+          { input: 'Up Tilt → Up Air', desc: 'Aerial combo chain. Excellent range.' },
+          { input: 'Down Tilt → Forward Smash', desc: 'Kill confirm at high percents.' },
+          { input: 'Neutral Air → Forward Air', desc: 'Aerial combo with long range.' }
+        ],
+        moves: [
+          { name: 'Flare', input: 'Neutral B', desc: 'Charged projectile. Can be released at different levels.' },
+          { name: 'Shadow Flare', input: 'Side B', desc: 'Orbs that track opponent and explode. Can stack multiple.' },
+          { name: 'Blade Dash', input: 'Up B', desc: 'Recovery move with multiple hits. Can be used for movement.' },
+          { name: 'Scintilla', input: 'Down B', desc: 'Counter that reflects projectiles. Has super armor.' }
+        ]
+      },
+      'Steve': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo. Works better with diamond tools.' },
+          { input: 'Up Tilt → Up Air', desc: 'Aerial combo chain.' },
+          { input: 'Minecart → Forward Smash', desc: 'Combo using minecart to set up kill.' },
+          { input: 'Anvil → Forward Air', desc: 'Combo using anvil for setup.' }
+        ],
+        moves: [
+          { name: 'Minecart', input: 'Neutral B', desc: 'Rides a minecart forward. Can be used for movement and combos.' },
+          { name: 'TNT', input: 'Side B', desc: 'Places TNT that explodes after delay. Can be used for stage control.' },
+          { name: 'Elytra', input: 'Up B', desc: 'Recovery move using elytra. Can glide horizontally.' },
+          { name: 'Craft / Mine', input: 'Down B', desc: 'Mines blocks to craft tools. Better tools = stronger attacks.' }
+        ]
+      },
+      'Sora': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo starter.' },
+          { input: 'Up Tilt → Up Air', desc: 'Aerial combo chain.' },
+          { input: 'Neutral Air → Forward Air', desc: 'Aerial combo.' },
+          { input: 'Magic → Forward Air', desc: 'Combo using magic spells for setup.' }
+        ],
+        moves: [
+          { name: 'Firaga', input: 'Neutral B', desc: 'Fire projectile. Can be charged for more power.' },
+          { name: 'Thundaga', input: 'Side B', desc: 'Lightning projectile that travels in a line.' },
+          { name: 'Blizzaga', input: 'Up B', desc: 'Ice projectile that freezes opponents. Also used for recovery.' },
+          { name: 'Counterattack', input: 'Down B', desc: 'Counter move that reflects projectiles.' }
+        ]
+      },
+      'Luigi': {
+        combos: [
+          { input: 'Down Throw → Up B', desc: 'Zero-to-death combo starter. Requires precise timing.' },
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo at low percents.' },
+          { input: 'Up Throw → Up Air', desc: 'Kill confirm at high percents.' },
+          { input: 'Down Throw → Down Air → Up B', desc: 'Advanced combo chain.' }
+        ],
+        moves: [
+          { name: 'Fireball', input: 'Neutral B', desc: 'Projectile that travels along ground. Slower than Mario\'s.' },
+          { name: 'Green Missile', input: 'Side B', desc: 'Horizontal recovery move. Has a small chance to misfire.' },
+          { name: 'Super Jump Punch', input: 'Up B', desc: 'Recovery move with invincibility frames. Powerful kill move.' },
+          { name: 'Luigi Cyclone', input: 'Down B', desc: 'Multi-hit move. Can be mashed for more hits and recovery height.' }
+        ]
+      },
+      'Captain Falcon': {
+        combos: [
+          { input: 'Down Throw → Up Air', desc: 'Basic combo starter.' },
+          { input: 'Up Throw → Up Air', desc: 'Kill confirm at high percents.' },
+          { input: 'Down Tilt → Knee (Forward Air)', desc: 'Kill confirm. Knee is very powerful.' },
+          { input: 'Raptor Boost → Up Air', desc: 'Combo using side B for setup.' }
+        ],
+        moves: [
+          { name: 'Falcon Punch', input: 'Neutral B', desc: 'Very powerful but slow attack. Mostly for style.' },
+          { name: 'Raptor Boost', input: 'Side B', desc: 'Dash attack that launches opponents upward. Can be used for recovery.' },
+          { name: 'Falcon Dive', input: 'Up B', desc: 'Recovery move that grabs opponents. Can be used for kills.' },
+          { name: 'Falcon Kick', input: 'Down B', desc: 'Slide attack. Can be used for movement and recovery.' }
+        ]
+      },
+      'Ness': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo at low percents.' },
+          { input: 'Up Throw → PK Thunder', desc: 'Combo using PK Thunder for follow-up.' },
+          { input: 'Down Throw → Up Air', desc: 'Combo at mid percents.' },
+          { input: 'PK Fire → Forward Air', desc: 'Combo using PK Fire for setup.' }
+        ],
+        moves: [
+          { name: 'PK Flash', input: 'Neutral B', desc: 'Charged explosion above Ness. Can be used for edgeguarding.' },
+          { name: 'PK Fire', input: 'Side B', desc: 'Fire projectile that traps opponents. Sets up for combos.' },
+          { name: 'PK Thunder', input: 'Up B', desc: 'Thunder bolt that can be controlled. Used for recovery and combos.' },
+          { name: 'PSI Magnet', input: 'Down B', desc: 'Absorbs energy projectiles and heals. Can be used for recovery.' }
+        ]
+      },
+      'Bowser': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo at low percents.' },
+          { input: 'Up Throw → Up Air', desc: 'Kill confirm at high percents.' },
+          { input: 'Down Throw → Forward Smash', desc: 'Kill confirm at very high percents.' },
+          { input: 'Down Tilt → Forward Air', desc: 'Combo starter.' }
+        ],
+        moves: [
+          { name: 'Fire Breath', input: 'Neutral B', desc: 'Flame breath that deals continuous damage. Can be angled.' },
+          { name: 'Flying Slam', input: 'Side B', desc: 'Command grab that slams opponent. Can kill at high percents.' },
+          { name: 'Whirling Fortress', input: 'Up B', desc: 'Recovery move with multiple hits. Good out-of-shield option.' },
+          { name: 'Bowser Bomb', input: 'Down B', desc: 'Ground pound attack. Can break shields.' }
+        ]
+      },
+      'Peach': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo. Can extend with turnips.' },
+          { input: 'Down Throw → Up Air', desc: 'Combo at low to mid percents.' },
+          { input: 'Turnip → Forward Air', desc: 'Combo using turnip for setup.' },
+          { input: 'Float Cancel → Forward Air', desc: 'Advanced technique using float mechanic.' }
+        ],
+        moves: [
+          { name: 'Toad', input: 'Neutral B', desc: 'Counter that releases spores. Can reflect projectiles.' },
+          { name: 'Peach Bomber', input: 'Side B', desc: 'Dash attack that can be used for recovery.' },
+          { name: 'Parasol', input: 'Up B', desc: 'Recovery move that can be used to attack.' },
+          { name: 'Vegetable', input: 'Down B', desc: 'Pulls turnips with random effects. Can be used for combos and edgeguarding.' }
+        ]
+      },
+      'Sonic': {
+        combos: [
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo starter.' },
+          { input: 'Up Throw → Up Air', desc: 'Kill confirm at high percents.' },
+          { input: 'Spin Dash → Up Air', desc: 'Combo using spin dash for setup.' },
+          { input: 'Down Tilt → Forward Air', desc: 'Combo starter.' }
+        ],
+        moves: [
+          { name: 'Homing Attack', input: 'Neutral B', desc: 'Locks onto opponent and attacks. Can be used for recovery.' },
+          { name: 'Spin Dash', input: 'Side B', desc: 'Charged dash attack. Can be used for movement and combos.' },
+          { name: 'Spring Jump', input: 'Up B', desc: 'Recovery move that creates a spring platform.' },
+          { name: 'Spin Charge', input: 'Down B', desc: 'Similar to spin dash but charges differently.' }
+        ]
+      },
+      'Ryu': {
+        combos: [
+          { input: 'Light Down Tilt → Shoryuken', desc: 'Kill confirm using command input Shoryuken.' },
+          { input: 'Light Up Tilt → Up Air', desc: 'Combo using light attacks.' },
+          { input: 'Hadoken → Forward Air', desc: 'Combo using Hadoken for setup.' },
+          { input: 'Focus Attack → Forward Smash', desc: 'Combo using focus attack cancel.' }
+        ],
+        moves: [
+          { name: 'Hadoken', input: 'Neutral B or QCF + A', desc: 'Fireball projectile. Command input version is faster.' },
+          { name: 'Tatsumaki Senpukyaku', input: 'Side B or QCB + A', desc: 'Hurricane kick. Command input version travels further.' },
+          { name: 'Shoryuken', input: 'Up B or DP + A', desc: 'Dragon punch. Command input version is stronger. Excellent kill move.' },
+          { name: 'Focus Attack', input: 'Down B', desc: 'Charges an attack with super armor. Can be canceled into dash.' }
+        ]
+      },
+      'Ken': {
+        combos: [
+          { input: 'Light Down Tilt → Shoryuken', desc: 'Kill confirm using command input Shoryuken.' },
+          { input: 'Light Up Tilt → Up Air', desc: 'Combo using light attacks.' },
+          { input: 'Hadoken → Forward Air', desc: 'Combo using Hadoken for setup.' },
+          { input: 'Focus Attack → Forward Smash', desc: 'Combo using focus attack cancel.' }
+        ],
+        moves: [
+          { name: 'Hadoken', input: 'Neutral B or QCF + A', desc: 'Fireball projectile. Command input version is faster.' },
+          { name: 'Tatsumaki Senpukyaku', input: 'Side B or QCB + A', desc: 'Hurricane kick with more hits than Ryu. Command input version travels further.' },
+          { name: 'Shoryuken', input: 'Up B or DP + A', desc: 'Dragon punch with more combo potential than Ryu. Command input version is stronger.' },
+          { name: 'Focus Attack', input: 'Down B', desc: 'Charges an attack with super armor. Can be canceled into dash.' }
+        ]
+      },
+      'Terry': {
+        combos: [
+          { input: 'Down Tilt → Power Dunk', desc: 'Kill confirm using command input Power Dunk.' },
+          { input: 'Crack Shoot → Forward Air', desc: 'Combo using Crack Shoot for setup.' },
+          { input: 'Burn Knuckle → Up Air', desc: 'Combo using Burn Knuckle.' },
+          { input: 'Power Geyser (Go → Down B at 100%+)', desc: 'Super special move available at 100%+. Very powerful.' }
+        ],
+        moves: [
+          { name: 'Power Wave', input: 'Neutral B or QCF + A', desc: 'Fireball projectile. Command input version is faster.' },
+          { name: 'Burn Knuckle', input: 'Side B or QCF + A', desc: 'Dash punch attack. Command input version travels further.' },
+          { name: 'Rising Tackle', input: 'Up B or DP + A', desc: 'Rising uppercut. Command input version is stronger.' },
+          { name: 'Crack Shoot', input: 'Down B or QCB + A', desc: 'Spinning kick. Command input version has more range.' }
+        ]
+      },
+      'Kazuya': {
+        combos: [
+          { input: 'Down Tilt → Electric Wind God Fist', desc: 'Kill confirm using command input EWGF.' },
+          { input: 'Down Throw → Forward Air', desc: 'Basic combo starter.' },
+          { input: 'Crouch Dash → Forward Smash', desc: 'Combo using crouch dash cancel.' },
+          { input: 'Devil Kazuya → Laser', desc: 'Combo using transformation at 100%+.' }
+        ],
+        moves: [
+          { name: 'Devil Blaster', input: 'Neutral B', desc: 'Energy projectile. Can be charged.' },
+          { name: 'Devil Fist', input: 'Side B', desc: 'Dash punch attack.' },
+          { name: 'Devil Wings', input: 'Up B', desc: 'Recovery move with multiple hits.' },
+          { name: 'Electric Wind God Fist', input: 'Crouch Dash → Forward + A', desc: 'Very powerful command input move. Excellent kill move.' }
+        ]
+      }
+    };
+
+    // Default data for characters not in COMBO_DATA
+    const DEFAULT_COMBO_DATA = {
+      combos: [
+        { input: 'Down Throw → Forward Air', desc: 'Basic combo starter. Works at low to mid percents.' },
+        { input: 'Up Throw → Up Air', desc: 'Kill confirm at high percents.' },
+        { input: 'Down Tilt → Forward Air', desc: 'Combo starter.' },
+        { input: 'Neutral Air → Forward Air', desc: 'Aerial combo chain.' }
+      ],
+      moves: [
+        { name: 'Neutral Special', input: 'Neutral B', desc: 'Character\'s neutral special move.' },
+        { name: 'Side Special', input: 'Side B', desc: 'Character\'s side special move.' },
+        { name: 'Up Special', input: 'Up B', desc: 'Character\'s recovery move.' },
+        { name: 'Down Special', input: 'Down B', desc: 'Character\'s down special move.' }
+      ]
+    };
+
+    const characterInput = document.getElementById('character');
+    const dropdownList = document.getElementById('dropdown-list');
+    const content = document.getElementById('content');
+    const characterName = document.getElementById('character-name');
+    const combosEl = document.getElementById('combos');
+    const movesEl = document.getElementById('moves');
+
+    let selectedCharacterIdx = -1;
+    let highlightedOptionIdx = -1;
+
+    // Populate dropdown list
+    function renderDropdownOptions(filter = '') {
+      const filterLower = filter.toLowerCase().trim();
+      const filtered = CHARACTERS.map((name, i) => ({
+        name,
+        idx: i,
+        visible: filterLower === '' || name.toLowerCase().includes(filterLower)
+      }));
+
+      const visibleCount = filtered.filter(f => f.visible).length;
+
+      if (visibleCount === 0) {
+        dropdownList.innerHTML = '<div class="dropdown-empty">No characters found</div>';
+        dropdownList.classList.add('visible');
+        return;
+      }
+
+      dropdownList.innerHTML = filtered.map((item, i) => {
+        if (!item.visible) return '';
+        const isHighlighted = i === highlightedOptionIdx;
+        return `<div class="dropdown-option ${isHighlighted ? 'highlighted' : ''}" data-idx="${item.idx}">${item.name}</div>`;
+      }).filter(html => html).join('');
+
+      // Attach click handlers
+      dropdownList.querySelectorAll('.dropdown-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const idx = parseInt(opt.dataset.idx, 10);
+          selectCharacter(idx);
+        });
+      });
+
+      dropdownList.classList.add('visible');
+    }
+
+    function selectCharacter(idx) {
+      selectedCharacterIdx = idx;
+      const name = CHARACTERS[idx];
+      characterInput.value = name;
+      dropdownList.classList.remove('visible');
+      highlightedOptionIdx = -1;
+      renderContent(name);
+    }
+
+    function renderContent(name) {
+      const data = COMBO_DATA[name] || DEFAULT_COMBO_DATA;
+      
+      characterName.textContent = name + ' — Combos & Moves';
+      
+      // Render combos
+      combosEl.innerHTML = data.combos.map(combo => `
+        <div class="combo-item">
+          <div class="combo-input">${combo.input}</div>
+          <div class="combo-desc">${combo.desc}</div>
+        </div>
+      `).join('');
+
+      // Render moves
+      movesEl.innerHTML = data.moves.map(move => `
+        <div class="move-item">
+          <div class="move-name">${move.name}</div>
+          <div class="move-input">${move.input}</div>
+          <div class="move-desc">${move.desc}</div>
+        </div>
+      `).join('');
+
+      content.classList.add('visible');
+    }
+
+    // Search functionality
+    characterInput.addEventListener('input', (e) => {
+      const query = e.target.value;
+      highlightedOptionIdx = -1;
+      
+      if (query === '' && selectedCharacterIdx >= 0) {
+        selectedCharacterIdx = -1;
+        content.classList.remove('visible');
+      }
+      
+      renderDropdownOptions(query);
+    });
+
+    characterInput.addEventListener('focus', () => {
+      if (characterInput.value === '') {
+        renderDropdownOptions('');
+      } else {
+        renderDropdownOptions(characterInput.value);
+      }
+    });
+
+    characterInput.addEventListener('keydown', (e) => {
+      const options = Array.from(dropdownList.querySelectorAll('.dropdown-option:not(.hidden)'));
+      if (options.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        highlightedOptionIdx = Math.min(highlightedOptionIdx + 1, options.length - 1);
+        options.forEach((opt, i) => {
+          opt.classList.toggle('highlighted', i === highlightedOptionIdx);
+        });
+        options[highlightedOptionIdx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        highlightedOptionIdx = Math.max(highlightedOptionIdx - 1, -1);
+        options.forEach((opt, i) => {
+          opt.classList.toggle('highlighted', i === highlightedOptionIdx);
+        });
+        if (highlightedOptionIdx >= 0) {
+          options[highlightedOptionIdx]?.scrollIntoView({ block: 'nearest' });
+        }
+      } else if (e.key === 'Enter' && highlightedOptionIdx >= 0) {
+        e.preventDefault();
+        const idx = parseInt(options[highlightedOptionIdx].dataset.idx, 10);
+        selectCharacter(idx);
+      } else if (e.key === 'Escape') {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('character-dropdown');
+      if (!dropdown.contains(e.target)) {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }
+    });
+
+    // Close dropdown on blur (with delay to allow clicks)
+    characterInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }, 200);
+    });
+  </script>
+</body>
+</html>

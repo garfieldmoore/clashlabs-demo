@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter picker — Super Smash Bros Ultimate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #1a1a24;
+      --accent-gold: #ffd700;
+      --accent-red: #ff4444;
+      --accent-green: #44ff88;
+      --accent-blue: #4488ff;
+      --accent-purple: #aa44ff;
+      --accent-pink: #ff44aa;
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+      --border: #333344;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0a0a0f 100%);
+      background-size: 200% 200%;
+      animation: gradient-shift 15s ease infinite;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(68, 136, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(170, 68, 255, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-gold);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 215, 0, 0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 100%, rgba(68, 136, 255, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(170, 68, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+      position: relative;
+      animation: glow 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--accent-blue);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover {
+      color: var(--accent-gold);
+      background: rgba(255, 215, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .picker-section {
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.95) 0%, rgba(30, 30, 45, 0.95) 100%);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+    }
+
+    .picker-section:hover {
+      border-color: var(--accent-gold);
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .picker-section label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .searchable-dropdown {
+      position: relative;
+      max-width: 400px;
+    }
+
+    .dropdown-input {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      background: rgba(10, 10, 15, 0.8);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: text;
+      transition: all 0.3s;
+    }
+
+    .dropdown-input:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      background: rgba(10, 10, 15, 0.95);
+    }
+
+    .dropdown-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.98) 0%, rgba(30, 30, 45, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--accent-gold);
+      border-radius: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .dropdown-list.visible {
+      display: block;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-option {
+      padding: 0.875rem 1.25rem;
+      cursor: pointer;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    .dropdown-option:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-option:hover,
+    .dropdown-option.highlighted {
+      background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+      color: var(--accent-gold);
+      transform: translateX(5px);
+    }
+
+    .dropdown-option.hidden {
+      display: none;
+    }
+
+    .dropdown-empty {
+      padding: 0.75rem 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+    }
+
+    .advice {
+      margin-top: 1.5rem;
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .advice.visible { 
+      display: block; 
+    }
+
+    .advice h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent-gold);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .recommended {
+      margin-bottom: 1.5rem;
+    }
+
+    .recommended h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-green);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(68, 255, 136, 0.5);
+    }
+
+    .avoid h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-red);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .chip.good {
+      background: linear-gradient(135deg, rgba(68, 255, 136, 0.25), rgba(68, 255, 136, 0.15));
+      color: #44ff88;
+      border: 2px solid rgba(68, 255, 136, 0.5);
+      box-shadow: 0 0 15px rgba(68, 255, 136, 0.3);
+    }
+
+    .chip.good:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(68, 255, 136, 0.5);
+    }
+
+    .chip.bad {
+      background: linear-gradient(135deg, rgba(255, 68, 68, 0.25), rgba(255, 68, 68, 0.15));
+      color: #ff4444;
+      border: 2px solid rgba(255, 68, 68, 0.5);
+      box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+    }
+
+    .chip.bad:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 68, 68, 0.5);
+    }
+
+    .tip {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .character-info {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .character-info h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .character-info .strengths h3 {
+      color: var(--accent-green);
+    }
+
+    .character-info .weaknesses h3 {
+      color: var(--accent-red);
+      margin-top: 1rem;
+    }
+
+    .character-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .matrix-section {
+      margin-top: 2rem;
+    }
+
+    .matrix-section h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .matrix-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table.matrix {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 0.5rem 0.6rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .matrix th {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .matrix td {
+      background: var(--bg-dark);
+    }
+
+    .matrix th.highlight-opponent,
+    .matrix td.highlight-opponent {
+      background: rgba(232, 185, 35, 0.12);
+    }
+
+    .matrix .opponent-col {
+      font-weight: 600;
+      color: var(--accent-gold);
+    }
+
+    .matrix .fav {
+      color: var(--accent-green);
+    }
+
+    .matrix .unfav {
+      color: var(--accent-red);
+    }
+
+    .matrix .neutral {
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--accent-gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>Counter picker</h1>
+    <p class="subtitle">Choose your opponent, get matchup advice</p>
+    <nav class="nav">
+      <a href="index.html">FAQ</a>
+      <a href="matchups.html">Counter picker</a>
+      <a href="combos.html">Combos & Moves</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="picker-section">
+      <label for="opponent">Opponent's character</label>
+      <div class="searchable-dropdown" id="opponent-dropdown">
+        <input
+          type="text"
+          id="opponent"
+          class="dropdown-input"
+          placeholder="Search for opponent character..."
+          autocomplete="off"
+        />
+        <div class="dropdown-list" id="dropdown-list"></div>
+      </div>
+
+      <div class="advice" id="advice">
+        <h2 id="advice-title">Matchup advice</h2>
+        <div class="recommended">
+          <h3>Recommended picks (favorable matchups)</h3>
+          <div class="chips" id="recommended"></div>
+        </div>
+        <div class="avoid">
+          <h3>Consider avoiding (tough matchups)</h3>
+          <div class="chips" id="avoid"></div>
+        </div>
+        <div class="character-info" id="character-info">
+          <div class="strengths">
+            <h3>Strengths</h3>
+            <p id="strengths"></p>
+          </div>
+          <div class="weaknesses">
+            <h3>Weaknesses</h3>
+            <p id="weaknesses"></p>
+          </div>
+        </div>
+        <p class="tip" id="tip"></p>
+      </div>
+    </section>
+
+    <section class="matrix-section">
+      <h2>Matchup matrix</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+        Rows = your character. Column = opponent. Green = favorable, red = unfavorable.
+      </p>
+      <div class="matrix-wrap">
+        <table class="matrix" id="matrix">
+          <thead>
+            <tr id="matrix-head"></tr>
+          </thead>
+          <tbody id="matrix-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Matchup data is illustrative. Super Smash Bros Ultimate &copy; Nintendo.</p>
+  </footer>
+
+  <script>
+    // Character list (subset of roster) - sorted alphabetically
+    const CHARACTERS = [
+      'Mario', 'Donkey Kong', 'Link', 'Samus', 'Yoshi', 'Kirby', 'Fox', 'Pikachu',
+      'Luigi', 'Ness', 'Captain Falcon', 'Jigglypuff', 'Peach', 'Bowser', 'Ice Climbers',
+      'Sheik', 'Zelda', 'Dr. Mario', 'Pichu', 'Falco', 'Marth', 'Lucina', 'Young Link',
+      'Ganondorf', 'Mewtwo', 'Roy', 'Chrom', 'Mr. Game & Watch', 'Meta Knight', 'Pit',
+      'Dark Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'Squirtle', 'Ivysaur', 'Charizard',
+      'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B.',
+      'Toon Link', 'Wolf', 'Villager', 'Mega Man', 'Wii Fit Trainer', 'Rosalina', 'Little Mac',
+      'Greninja', 'Palutena', 'Pac-Man', 'Robin', 'Shulk', 'Bowser Jr.', 'Duck Hunt',
+      'Ryu', 'Ken', 'Cloud', 'Corrin', 'Bayonetta', 'Inkling', 'Ridley', 'Simon', 'Richter',
+      'King K. Rool', 'Isabelle', 'Incineroar', 'Joker', 'Hero', 'Banjo & Kazooie', 'Terry',
+      'Byleth', 'Min Min', 'Steve', 'Sephiroth', 'Pyra / Mythra', 'Kazuya', 'Sora'
+    ].sort((a, b) => a.localeCompare(b));
+
+    // Matchup data: for each character id (index), who they beat (favorable) and lose to (unfavorable)
+    // Indices match CHARACTERS. Simplified for demo; expand with real tier/matchup data as needed.
+    function buildMatchupData() {
+      const n = CHARACTERS.length;
+      const beats = Array(n).fill(null).map(() => []);
+      const losesTo = Array(n).fill(null).map(() => []);
+
+      // Assign some plausible counters: fast/small often beat heavies, disjoints beat brawlers, etc.
+      const fast = ['Fox', 'Sheik', 'Sonic', 'Pikachu', 'Zero Suit Samus', 'Joker', 'Greninja'];
+      const heavies = ['Bowser', 'King K. Rool', 'Ganondorf', 'Donkey Kong', 'Incineroar'];
+      const swordies = ['Marth', 'Lucina', 'Ike', 'Cloud', 'Shulk', 'Sephiroth', 'Pyra / Mythra'];
+      const zoners = ['Samus', 'Link', 'Young Link', 'Toon Link', 'Mega Man', 'Simon', 'Richter', 'Villager'];
+
+      const idx = (name) => CHARACTERS.indexOf(name);
+      fast.forEach(f => {
+        heavies.forEach(h => {
+          if (idx(f) >= 0 && idx(h) >= 0) {
+            beats[idx(f)].push(idx(h));
+            losesTo[idx(h)].push(idx(f));
+          }
+        });
+      });
+      swordies.forEach(s => {
+        zoners.forEach(z => {
+          if (idx(s) >= 0 && idx(z) >= 0) {
+            beats[idx(s)].push(idx(z));
+            losesTo[idx(z)].push(idx(s));
+          }
+        });
+      });
+      // Heavies beat some light zoners
+      heavies.forEach(h => {
+        ['Villager', 'Isabelle'].forEach(z => {
+          if (idx(h) >= 0 && idx(z) >= 0) {
+            beats[idx(h)].push(idx(z));
+            losesTo[idx(z)].push(idx(h));
+          }
+        });
+      });
+      // Pikachu often cited as strong; give a few favorable
+      if (idx('Pikachu') >= 0) {
+        [idx('Ness'), idx('Lucas'), idx('King K. Rool')].forEach(i => {
+          if (i >= 0 && !beats[idx('Pikachu')].includes(i)) {
+            beats[idx('Pikachu')].push(i);
+            losesTo[i].push(idx('Pikachu'));
+          }
+        });
+      }
+      // Steve loses to fast pressure
+      if (idx('Steve') >= 0) {
+        ['Fox', 'Pikachu', 'Joker', 'Sonic'].forEach(f => {
+          if (idx(f) >= 0) {
+            beats[idx(f)].push(idx('Steve'));
+            if (!losesTo[idx('Steve')].includes(idx(f))) losesTo[idx('Steve')].push(idx(f));
+          }
+        });
+      }
+      // Fill in a few more so every character has at least some data
+      for (let i = 0; i < n; i++) {
+        if (beats[i].length === 0) {
+          const j = (i + 7) % n;
+          beats[i].push(j);
+          if (!losesTo[j].includes(i)) losesTo[j].push(i);
+        }
+        if (losesTo[i].length === 0) {
+          const j = (i + 11) % n;
+          losesTo[i].push(j);
+          if (!beats[j].includes(i)) beats[j].push(i);
+        }
+      }
+      return { beats, losesTo };
+    }
+
+    const { beats, losesTo } = buildMatchupData();
+
+    // Character strengths and weaknesses data
+    const CHARACTER_DATA = {
+      'Mario': {
+        strengths: 'Versatile toolkit with fireball zoning, cape reflect, and strong edgeguarding. Good recovery and combo game.',
+        weaknesses: 'Average range and speed. Can struggle against characters with better mobility or disjoints.'
+      },
+      'Donkey Kong': {
+        strengths: 'High damage output, strong grab game, and excellent edgeguarding with down-B. Great kill power.',
+        weaknesses: 'Large hitbox makes him combo food. Slow movement and predictable recovery.'
+      },
+      'Link': {
+        strengths: 'Excellent zoning with boomerang, bombs, and arrows. Strong sword attacks and good recovery.',
+        weaknesses: 'Slower movement speed. Can struggle against rushdown characters who get past projectiles.'
+      },
+      'Samus': {
+        strengths: 'Strong projectile game with charge shot and missiles. Good spacing and edgeguarding.',
+        weaknesses: 'Slower movement. Struggles in close combat against fast characters.'
+      },
+      'Yoshi': {
+        strengths: 'Excellent air mobility and recovery. Strong combo game and egg throw for edgeguarding.',
+        weaknesses: 'No third jump makes recovery risky. Can be predictable in neutral.'
+      },
+      'Kirby': {
+        strengths: 'Multiple jumps for recovery, copy abilities, and good edgeguarding. Cute and deceptively strong.',
+        weaknesses: 'Short range and slow ground speed. Struggles against characters with better mobility.'
+      },
+      'Fox': {
+        strengths: 'Extremely fast movement and frame data. Strong combo game and reflector. Excellent neutral.',
+        weaknesses: 'Lightweight and dies early. Recovery can be predictable and gimpable.'
+      },
+      'Pikachu': {
+        strengths: 'Top-tier recovery, excellent combo game, and quick attack for mobility. Small hitbox.',
+        weaknesses: 'Lightweight. Requires precise execution. Can struggle against characters with good range.'
+      },
+      'Luigi': {
+        strengths: 'Incredible grab combos and kill confirms. Strong recovery with cyclone. High damage output.',
+        weaknesses: 'Poor mobility and predictable recovery. Struggles against characters who can avoid grabs.'
+      },
+      'Ness': {
+        strengths: 'Strong aerial game, PK Thunder for recovery and edgeguarding. Good kill power.',
+        weaknesses: 'Recovery is gimpable. Can struggle against characters with reflectors or good edgeguarding.'
+      },
+      'Captain Falcon': {
+        strengths: 'Fast movement and strong aerial attacks. Excellent combo game and kill confirms.',
+        weaknesses: 'Recovery is linear and gimpable. Can struggle against characters with better neutral tools.'
+      },
+      'Jigglypuff': {
+        strengths: 'Excellent air mobility and multiple jumps. Rest is a powerful kill move. Great edgeguarding.',
+        weaknesses: 'Extremely lightweight and dies very early. Struggles against characters with good range.'
+      },
+      'Peach': {
+        strengths: 'Float mechanic for unique movement, strong turnip pulls, and excellent combo game.',
+        weaknesses: 'Requires high technical skill. Can struggle against fast rushdown characters.'
+      },
+      'Bowser': {
+        strengths: 'Heavyweight with high damage output. Strong command grab and excellent kill power.',
+        weaknesses: 'Large hitbox makes him combo food. Slow movement and predictable recovery.'
+      },
+      'Ice Climbers': {
+        strengths: 'Desync techniques for complex combos. Strong grab game when both climbers are present.',
+        weaknesses: 'Much weaker when separated. Requires high technical skill. Struggles against characters who can separate them.'
+      },
+      'Sheik': {
+        strengths: 'Extremely fast movement and frame data. Excellent combo game and edgeguarding.',
+        weaknesses: 'Low kill power. Requires long combos to secure stocks. Struggles against heavyweights.'
+      },
+      'Zelda': {
+        strengths: 'Strong special moves including Phantom and Din\'s Fire. Good edgeguarding and kill power.',
+        weaknesses: 'Slow movement and predictable recovery. Struggles against fast characters.'
+      },
+      'Dr. Mario': {
+        strengths: 'Strong kill power and down-B for recovery mixups. Good combo game.',
+        weaknesses: 'Slower than Mario. Poor recovery distance. Struggles against characters with better mobility.'
+      },
+      'Pichu': {
+        strengths: 'Extremely fast and small hitbox. Strong combo game and quick attack mobility.',
+        weaknesses: 'Self-damage from electric moves. Very lightweight. Struggles against characters with good range.'
+      },
+      'Falco': {
+        strengths: 'Excellent combo game with down-air. Strong reflector and laser for neutral control.',
+        weaknesses: 'Slower than Fox. Recovery can be predictable. Struggles against characters with better mobility.'
+      },
+      'Marth': {
+        strengths: 'Tipper mechanic for high damage. Excellent range and spacing. Strong edgeguarding.',
+        weaknesses: 'Requires precise spacing. Weaker when not hitting tippers. Struggles against rushdown.'
+      },
+      'Lucina': {
+        strengths: 'Consistent sword attacks without tipper mechanic. Excellent range and spacing.',
+        weaknesses: 'No tipper means less kill power than Marth. Can struggle against characters with better mobility.'
+      },
+      'Young Link': {
+        strengths: 'Fast movement with strong projectile game. Good combo potential and recovery.',
+        weaknesses: 'Lower kill power than adult Link. Can struggle against characters who can close distance quickly.'
+      },
+      'Ganondorf': {
+        strengths: 'Extremely high damage output and kill power. Strong command grab and edgeguarding.',
+        weaknesses: 'Very slow movement. Large hitbox. Poor recovery. Struggles against fast characters.'
+      },
+      'Mewtwo': {
+        strengths: 'Strong projectile game, good recovery, and high damage output. Disable for mixups.',
+        weaknesses: 'Lightweight and large hitbox. Struggles against characters with good combo game.'
+      },
+      'Roy': {
+        strengths: 'High damage output, especially up close. Strong kill power and combo game.',
+        weaknesses: 'Weaker at the tip of sword. Struggles against characters who can outspace him.'
+      },
+      'Chrom': {
+        strengths: 'Consistent sword attacks with high damage. Strong combo game and kill power.',
+        weaknesses: 'Recovery is very linear and gimpable. Struggles against characters with good edgeguarding.'
+      },
+      'Mr. Game & Watch': {
+        strengths: 'Excellent out-of-shield options. Strong edgeguarding and unpredictable recovery.',
+        weaknesses: 'Lightweight. Can struggle against characters with better range or mobility.'
+      },
+      'Meta Knight': {
+        strengths: 'Excellent recovery with multiple jumps. Strong combo game and edgeguarding.',
+        weaknesses: 'Short range. Struggles against characters with better disjoints or projectiles.'
+      },
+      'Pit': {
+        strengths: 'Balanced toolkit with good recovery. Strong edgeguarding and arrow for zoning.',
+        weaknesses: 'Average in most areas. Struggles against characters with more specialized strengths.'
+      },
+      'Dark Pit': {
+        strengths: 'Similar to Pit with stronger side-B. Good recovery and balanced toolkit.',
+        weaknesses: 'Arrow is less useful than Pit\'s. Struggles against characters with better mobility.'
+      },
+      'Zero Suit Samus': {
+        strengths: 'Excellent mobility and combo game. Strong edgeguarding and flip jump for recovery.',
+        weaknesses: 'Lightweight. Struggles against characters with strong kill power or good range.'
+      },
+      'Wario': {
+        strengths: 'Waft is an extremely powerful kill move. Good air mobility and combo game.',
+        weaknesses: 'Requires patience to charge Waft. Struggles against characters who can avoid close combat.'
+      },
+      'Snake': {
+        strengths: 'Strong projectile game with grenades and missiles. Excellent edgeguarding and kill power.',
+        weaknesses: 'Slow movement. Can struggle against fast characters who can rush him down.'
+      },
+      'Ike': {
+        strengths: 'High damage output and kill power. Strong sword attacks and recovery.',
+        weaknesses: 'Slow movement and frame data. Struggles against fast characters with better mobility.'
+      },
+      'Squirtle': {
+        strengths: 'Fast movement and combo game. Good recovery as part of Pokemon Trainer.',
+        weaknesses: 'Low kill power. Struggles to secure stocks. Best used for building damage.'
+      },
+      'Ivysaur': {
+        strengths: 'Good range with vine attacks. Strong edgeguarding and recovery.',
+        weaknesses: 'Slower movement. Struggles against fast characters who can get in close.'
+      },
+      'Charizard': {
+        strengths: 'High damage output and kill power. Strong recovery and edgeguarding.',
+        weaknesses: 'Large hitbox. Struggles against characters with good combo game.'
+      },
+      'Diddy Kong': {
+        strengths: 'Banana peel for stage control. Strong combo game and good recovery.',
+        weaknesses: 'Requires item management. Struggles when bananas are taken away.'
+      },
+      'Lucas': {
+        strengths: 'Strong special moves including PK Freeze. Good recovery and combo game.',
+        weaknesses: 'Recovery can be gimpable. Struggles against characters with reflectors.'
+      },
+      'Sonic': {
+        strengths: 'Extremely fast movement. Strong combo game and difficult to catch.',
+        weaknesses: 'Requires precise execution. Can struggle against characters with good defensive options.'
+      },
+      'King Dedede': {
+        strengths: 'Gordo for stage control. Strong edgeguarding and high damage output.',
+        weaknesses: 'Large hitbox and slow movement. Struggles against fast characters.'
+      },
+      'Olimar': {
+        strengths: 'Pikmin management for varied attacks. Strong when Pikmin are available.',
+        weaknesses: 'Much weaker without Pikmin. Struggles when Pikmin are knocked off.'
+      },
+      'Lucario': {
+        strengths: 'Aura mechanic increases power at high percent. Strong recovery and kill power.',
+        weaknesses: 'Weak at low percent. Struggles to secure early stocks.'
+      },
+      'R.O.B.': {
+        strengths: 'Strong projectile game with gyro and laser. Good recovery and edgeguarding.',
+        weaknesses: 'Large hitbox. Struggles against fast characters who can rush him down.'
+      },
+      'Toon Link': {
+        strengths: 'Fast movement with strong projectile game. Good combo potential.',
+        weaknesses: 'Lower kill power than Link. Struggles against characters with better range.'
+      },
+      'Wolf': {
+        strengths: 'Strong neutral game with blaster and reflector. Good combo game and kill power.',
+        weaknesses: 'Recovery can be predictable. Struggles against characters with good edgeguarding.'
+      },
+      'Villager': {
+        strengths: 'Excellent stage control with tree and slingshot. Strong edgeguarding and recovery.',
+        weaknesses: 'Slow movement. Struggles against fast characters who can rush him down.'
+      },
+      'Mega Man': {
+        strengths: 'Strong projectile game with lemons and metal blade. Good edgeguarding.',
+        weaknesses: 'Requires precise spacing. Struggles in close combat.'
+      },
+      'Wii Fit Trainer': {
+        strengths: 'Deep breathing for stat boosts. Strong edgeguarding and unique hitboxes.',
+        weaknesses: 'Unconventional moveset. Struggles against characters with more standard tools.'
+      },
+      'Rosalina': {
+        strengths: 'Luma for stage control and combos. Strong when Luma is present.',
+        weaknesses: 'Much weaker without Luma. Struggles when Luma is knocked away.'
+      },
+      'Little Mac': {
+        strengths: 'Extremely strong ground game and super armor. Excellent on stage.',
+        weaknesses: 'Terrible recovery and air game. Struggles against characters who can edgeguard.'
+      },
+      'Greninja': {
+        strengths: 'Fast movement and strong combo game. Good recovery and edgeguarding.',
+        weaknesses: 'Requires precise execution. Struggles against characters with better neutral tools.'
+      },
+      'Palutena': {
+        strengths: 'Strong projectile game and excellent recovery. Good edgeguarding.',
+        weaknesses: 'Can struggle against fast characters who can rush her down.'
+      },
+      'Pac-Man': {
+        strengths: 'Excellent stage control with fruit and hydrant. Strong edgeguarding.',
+        weaknesses: 'Requires item management. Struggles when items are taken away.'
+      },
+      'Robin': {
+        strengths: 'Strong projectile game with spells. Good range and kill power.',
+        weaknesses: 'Weapon durability system. Struggles when tomes/sword break.'
+      },
+      'Shulk': {
+        strengths: 'Monado Arts for stat customization. Strong range and kill power.',
+        weaknesses: 'Requires good decision-making. Struggles against fast characters.'
+      },
+      'Bowser Jr.': {
+        strengths: 'Mechakoopa for stage control. Strong recovery and edgeguarding.',
+        weaknesses: 'Large hitbox. Struggles against characters with good combo game.'
+      },
+      'Duck Hunt': {
+        strengths: 'Strong stage control with can and gunmen. Good edgeguarding.',
+        weaknesses: 'Requires setup time. Struggles against fast characters.'
+      },
+      'Ryu': {
+        strengths: 'High damage output with command inputs. Strong kill power.',
+        weaknesses: 'Requires precise execution. Struggles against characters with better mobility.'
+      },
+      'Ken': {
+        strengths: 'Similar to Ryu with stronger combo potential. High damage output.',
+        weaknesses: 'Requires precise execution. Struggles against characters with better mobility.'
+      },
+      'Cloud': {
+        strengths: 'Strong sword attacks and Limit Break mechanic. Excellent range.',
+        weaknesses: 'Recovery is poor without Limit. Struggles when Limit is not available.'
+      },
+      'Corrin': {
+        strengths: 'Unique pin mechanic and good range. Strong edgeguarding.',
+        weaknesses: 'Slower movement. Struggles against fast characters.'
+      },
+      'Bayonetta': {
+        strengths: 'Strong combo game with witch time. Good recovery.',
+        weaknesses: 'Requires precise execution. Struggles after nerfs from previous games.'
+      },
+      'Inkling': {
+        strengths: 'Fast movement and strong combo game. Ink mechanic for damage.',
+        weaknesses: 'Recovery can be predictable. Struggles against characters with good edgeguarding.'
+      },
+      'Ridley': {
+        strengths: 'High damage output and kill power. Strong edgeguarding.',
+        weaknesses: 'Large hitbox. Struggles against characters with good combo game.'
+      },
+      'Simon': {
+        strengths: 'Strong projectile game with whip. Good edgeguarding.',
+        weaknesses: 'Slow movement. Struggles against fast characters.'
+      },
+      'Richter': {
+        strengths: 'Similar to Simon with slightly different properties. Strong projectile game.',
+        weaknesses: 'Slow movement. Struggles against fast characters.'
+      },
+      'King K. Rool': {
+        strengths: 'Strong projectile game and armor. High damage output.',
+        weaknesses: 'Large hitbox and slow movement. Struggles against fast characters.'
+      },
+      'Isabelle': {
+        strengths: 'Fishing rod for stage control. Good edgeguarding and recovery.',
+        weaknesses: 'Slower than Villager. Struggles against fast characters.'
+      },
+      'Incineroar': {
+        strengths: 'High damage output and kill power. Strong command grab.',
+        weaknesses: 'Very slow movement. Struggles against characters with better mobility.'
+      },
+      'Joker': {
+        strengths: 'Arsene mechanic increases power. Excellent combo game and recovery.',
+        weaknesses: 'Weaker without Arsene. Struggles to secure stocks in base form.'
+      },
+      'Hero': {
+        strengths: 'Command menu for varied special moves. High damage output and kill power.',
+        weaknesses: 'RNG-dependent. Struggles when command menu options are poor.'
+      },
+      'Banjo & Kazooie': {
+        strengths: 'Strong projectile game with eggs. Good recovery and edgeguarding.',
+        weaknesses: 'Slower movement. Struggles against fast characters.'
+      },
+      'Terry': {
+        strengths: 'High damage output with command inputs. Strong kill power.',
+        weaknesses: 'Requires precise execution. Struggles against characters with better mobility.'
+      },
+      'Byleth': {
+        strengths: 'Excellent range with multiple weapons. Strong edgeguarding and kill power.',
+        weaknesses: 'Slow movement. Struggles against fast characters.'
+      },
+      'Min Min': {
+        strengths: 'Excellent range with ARMS. Strong edgeguarding and zoning.',
+        weaknesses: 'Weak up close. Struggles against characters who can get in.'
+      },
+      'Steve': {
+        strengths: 'Mining and crafting for stat boosts. Strong when resources are available.',
+        weaknesses: 'Weak without resources. Struggles against fast characters who pressure early.'
+      },
+      'Sephiroth': {
+        strengths: 'Excellent range with Masamune. Strong edgeguarding and kill power.',
+        weaknesses: 'Lightweight. Struggles against characters with good combo game.'
+      },
+      'Pyra / Mythra': {
+        strengths: 'Mythra for speed, Pyra for power. Can switch for different situations.',
+        weaknesses: 'Requires good character management. Struggles when caught in wrong form.'
+      },
+      'Kazuya': {
+        strengths: 'High damage output with command inputs. Strong kill power and armor.',
+        weaknesses: 'Requires precise execution. Struggles against characters with better mobility.'
+      },
+      'Sora': {
+        strengths: 'Good recovery and combo game. Strong edgeguarding.',
+        weaknesses: 'Requires precise execution. Struggles against characters with better neutral tools.'
+      }
+    };
+
+    const opponentInput = document.getElementById('opponent');
+    const dropdownList = document.getElementById('dropdown-list');
+    const adviceBlock = document.getElementById('advice');
+    const adviceTitle = document.getElementById('advice-title');
+    const recommendedEl = document.getElementById('recommended');
+    const avoidEl = document.getElementById('avoid');
+    const strengthsEl = document.getElementById('strengths');
+    const weaknessesEl = document.getElementById('weaknesses');
+    const tipEl = document.getElementById('tip');
+    const matrixHead = document.getElementById('matrix-head');
+    const matrixBody = document.getElementById('matrix-body');
+
+    let selectedOpponentIdx = -1;
+    let highlightedOptionIdx = -1;
+
+    // Populate dropdown list
+    function renderDropdownOptions(filter = '') {
+      const filterLower = filter.toLowerCase().trim();
+      const filtered = CHARACTERS.map((name, i) => ({
+        name,
+        idx: i,
+        visible: filterLower === '' || name.toLowerCase().includes(filterLower)
+      }));
+
+      const visibleCount = filtered.filter(f => f.visible).length;
+
+      if (visibleCount === 0) {
+        dropdownList.innerHTML = '<div class="dropdown-empty">No characters found</div>';
+        dropdownList.classList.add('visible');
+        return;
+      }
+
+      dropdownList.innerHTML = filtered.map((item, i) => {
+        if (!item.visible) return '';
+        const isHighlighted = i === highlightedOptionIdx;
+        return `<div class="dropdown-option ${isHighlighted ? 'highlighted' : ''}" data-idx="${item.idx}">${item.name}</div>`;
+      }).filter(html => html).join('');
+
+      // Attach click handlers
+      dropdownList.querySelectorAll('.dropdown-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const idx = parseInt(opt.dataset.idx, 10);
+          selectOpponent(idx);
+        });
+      });
+
+      dropdownList.classList.add('visible');
+    }
+
+    function selectOpponent(idx) {
+      selectedOpponentIdx = idx;
+      opponentInput.value = CHARACTERS[idx];
+      dropdownList.classList.remove('visible');
+      highlightedOptionIdx = -1;
+      renderAdvice(idx);
+      buildMatrix(idx);
+    }
+
+
+    opponentInput.addEventListener('focus', () => {
+      if (opponentInput.value === '') {
+        renderDropdownOptions('');
+      } else {
+        renderDropdownOptions(opponentInput.value);
+      }
+    });
+
+    opponentInput.addEventListener('keydown', (e) => {
+      const options = Array.from(dropdownList.querySelectorAll('.dropdown-option:not(.hidden)'));
+      if (options.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        highlightedOptionIdx = Math.min(highlightedOptionIdx + 1, options.length - 1);
+        options.forEach((opt, i) => {
+          opt.classList.toggle('highlighted', i === highlightedOptionIdx);
+        });
+        options[highlightedOptionIdx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        highlightedOptionIdx = Math.max(highlightedOptionIdx - 1, -1);
+        options.forEach((opt, i) => {
+          opt.classList.toggle('highlighted', i === highlightedOptionIdx);
+        });
+        if (highlightedOptionIdx >= 0) {
+          options[highlightedOptionIdx]?.scrollIntoView({ block: 'nearest' });
+        }
+      } else if (e.key === 'Enter' && highlightedOptionIdx >= 0) {
+        e.preventDefault();
+        const idx = parseInt(options[highlightedOptionIdx].dataset.idx, 10);
+        selectOpponent(idx);
+      } else if (e.key === 'Escape') {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('opponent-dropdown');
+      if (!dropdown.contains(e.target)) {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }
+    });
+
+    // Handle clearing the input
+    opponentInput.addEventListener('input', (e) => {
+      const query = e.target.value;
+      highlightedOptionIdx = -1;
+      
+      // If input is cleared and we had a selection, clear it
+      if (query === '' && selectedOpponentIdx >= 0) {
+        selectedOpponentIdx = -1;
+        adviceBlock.classList.remove('visible');
+        buildMatrix(-1);
+      }
+      
+      renderDropdownOptions(query);
+    });
+
+    // Close dropdown on blur (with delay to allow clicks)
+    opponentInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }, 200);
+    });
+
+    function renderAdvice(opponentIdx) {
+      const name = CHARACTERS[opponentIdx];
+      const good = losesTo[opponentIdx].map(i => CHARACTERS[i]);
+      const bad = beats[opponentIdx].map(i => CHARACTERS[i]);
+      const charData = CHARACTER_DATA[name] || { strengths: 'Character data not available.', weaknesses: 'Character data not available.' };
+
+      adviceTitle.textContent = 'Against ' + name;
+      recommendedEl.innerHTML = good.length
+        ? good.map(c => '<span class="chip good">' + c + '</span>').join('')
+        : '<span class="chip neutral">No strong counters in dataset — pick who you play best.</span>';
+      avoidEl.innerHTML = bad.length
+        ? bad.map(c => '<span class="chip bad">' + c + '</span>').join('')
+        : '<span class="chip neutral">No specific avoids in dataset.</span>';
+      
+      // Display character strengths and weaknesses
+      strengthsEl.textContent = charData.strengths;
+      weaknessesEl.textContent = charData.weaknesses;
+      
+      tipEl.textContent = 'Tip: Matchups vary by skill and playstyle. Use this as a starting point and adjust based on your experience.';
+      adviceBlock.classList.add('visible');
+    }
+
+    function buildMatrix(highlightOpponentIdx) {
+      const maxCols = 20;
+      let cols;
+      if (highlightOpponentIdx >= 0 && CHARACTERS[highlightOpponentIdx]) {
+        const oppName = CHARACTERS[highlightOpponentIdx];
+        const rest = CHARACTERS.filter(c => c !== oppName).slice(0, maxCols - 1);
+        cols = [oppName, ...rest];
+      } else {
+        cols = CHARACTERS.slice(0, maxCols);
+      }
+      const highlightColIdx = highlightOpponentIdx >= 0 ? 0 : -1;
+
+      matrixHead.innerHTML = '<th>Your character</th>' + cols.map((c, j) =>
+        '<th class="' + (j === highlightColIdx ? 'highlight-opponent' : '') + '">' + c + '</th>'
+      ).join('');
+      matrixBody.innerHTML = CHARACTERS.map((rowName, rowIdx) => {
+        const cells = cols.map((colName, j) => {
+          const colIdx = CHARACTERS.indexOf(colName);
+          if (colIdx < 0) return '<td class="neutral">·</td>';
+          if (rowIdx === colIdx) return '<td class="neutral">—</td>';
+          const favored = beats[rowIdx].includes(colIdx);
+          const unfavored = losesTo[rowIdx].includes(colIdx);
+          let cls = 'neutral';
+          if (favored) cls = 'fav';
+          else if (unfavored) cls = 'unfav';
+          if (j === highlightColIdx) cls += ' highlight-opponent';
+          return '<td class="' + cls + '">' + (favored ? '✓' : unfavored ? '✗' : '·') + '</td>';
+        });
+        return '<tr><td class="opponent-col">' + rowName + '</td>' + cells.join('') + '</tr>';
+      }).join('');
+    }
+
+    buildMatrix(-1);
+  </script>
+</body>
+</html>
