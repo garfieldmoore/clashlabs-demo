@@ -488,6 +488,7 @@
       <a href="index.html">FAQ</a>
       <a href="matchups.html">Counter picker</a>
       <a href="combos.html">Combos & Moves</a>
+      <a href="tips.html">Tips & Tricks</a>
     </nav>
   </header>
 
@@ -623,17 +624,33 @@
         });
       }
       // Fill in a few more so every character has at least some data
+      // Avoid creating bidirectional conflicts (A beats B AND B beats A)
       for (let i = 0; i < n; i++) {
         if (beats[i].length === 0) {
-          const j = (i + 7) % n;
-          beats[i].push(j);
-          if (!losesTo[j].includes(i)) losesTo[j].push(i);
+          let j = (i + 7) % n;
+          while (j !== i && (beats[j].includes(i) || losesTo[j].includes(i))) {
+            j = (j + 1) % n;
+          }
+          if (j !== i) {
+            beats[i].push(j);
+            if (!losesTo[j].includes(i)) losesTo[j].push(i);
+          }
         }
         if (losesTo[i].length === 0) {
-          const j = (i + 11) % n;
-          losesTo[i].push(j);
-          if (!beats[j].includes(i)) beats[j].push(i);
+          let j = (i + 11) % n;
+          while (j !== i && (beats[j].includes(i) || losesTo[j].includes(i))) {
+            j = (j + 1) % n;
+          }
+          if (j !== i) {
+            losesTo[i].push(j);
+            if (!beats[j].includes(i)) beats[j].push(i);
+          }
         }
+      }
+      // Deduplicate arrays
+      for (let i = 0; i < n; i++) {
+        beats[i] = [...new Set(beats[i])];
+        losesTo[i] = [...new Set(losesTo[i])];
       }
       return { beats, losesTo };
     }

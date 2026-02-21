@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tips — Super Smash Bros Ultimate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5); }
+    }
+
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #1a1a24;
+      --accent-gold: #ffd700;
+      --accent-red: #ff4444;
+      --accent-green: #44ff88;
+      --accent-blue: #4488ff;
+      --accent-purple: #aa44ff;
+      --accent-pink: #ff44aa;
+      --accent-orange: #ff8844;
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+      --border: #333344;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0a0a0f 100%);
+      background-size: 200% 200%;
+      animation: gradient-shift 15s ease infinite;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(68, 136, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(170, 68, 255, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-gold);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 215, 0, 0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 100%, rgba(68, 136, 255, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(170, 68, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+      position: relative;
+      animation: glow 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--accent-blue);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover {
+      color: var(--accent-gold);
+      background: rgba(255, 215, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .nav a:hover::before { left: 100%; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .search-section {
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.95) 0%, rgba(30, 30, 45, 0.95) 100%);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+    }
+
+    .search-section:hover {
+      border-color: var(--accent-gold);
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+    }
+
+    .search-section label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .searchable-dropdown {
+      position: relative;
+      max-width: 400px;
+    }
+
+    .dropdown-input {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      background: rgba(10, 10, 15, 0.8);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: text;
+      transition: all 0.3s;
+    }
+
+    .dropdown-input:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      background: rgba(10, 10, 15, 0.95);
+    }
+
+    .dropdown-input::placeholder { color: var(--text-muted); }
+
+    .dropdown-list {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.98) 0%, rgba(30, 30, 45, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--accent-gold);
+      border-radius: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .dropdown-list.visible { 
+      display: block; 
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-option {
+      padding: 0.875rem 1.25rem;
+      cursor: pointer;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    .dropdown-option:last-child { border-bottom: none; }
+
+    .dropdown-option:hover,
+    .dropdown-option.highlighted {
+      background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+      color: var(--accent-gold);
+      transform: translateX(5px);
+    }
+
+    .dropdown-empty {
+      padding: 0.75rem 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+    }
+
+    .tips-display {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .tips-display.visible { display: block; }
+
+    .tips-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .tip-card {
+      background: linear-gradient(135deg, rgba(26, 26, 36, 0.9) 0%, rgba(30, 30, 45, 0.9) 100%);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: all 0.3s;
+    }
+
+    .tip-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
+    }
+
+    .tip-card.strategy { border-left: 4px solid var(--accent-green); }
+    .tip-card.combo { border-left: 4px solid var(--accent-blue); }
+    .tip-card.kill { border-left: 4px solid var(--accent-red); }
+    .tip-card.neutral { border-left: 4px solid var(--accent-orange); }
+    .tip-card.recovery { border-left: 4px solid var(--accent-purple); }
+    .tip-card.general { border-left: 4px solid var(--accent-gold); }
+
+    .tip-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tip-card.strategy h3 { color: var(--accent-green); }
+    .tip-card.combo h3 { color: var(--accent-blue); }
+    .tip-card.kill h3 { color: var(--accent-red); }
+    .tip-card.neutral h3 { color: var(--accent-orange); }
+    .tip-card.recovery h3 { color: var(--accent-purple); }
+    .tip-card.general h3 { color: var(--accent-gold); }
+
+    .tip-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .tip-card .moves {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .move-tag {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin: 1.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .placeholder-message {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .placeholder-message p {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .placeholder-message span {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a { color: var(--accent-gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>Tips</h1>
+    <p class="subtitle">Master your character</p>
+    <nav class="nav">
+      <a href="index.html">FAQ</a>
+      <a href="matchups.html">Counter picker</a>
+      <a href="combos.html">Combos & Moves</a>
+      <a href="tips.html">Tips & Tricks</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <label for="character">Select a character</label>
+      <div class="searchable-dropdown" id="character-dropdown">
+        <input
+          type="text"
+          id="character"
+          class="dropdown-input"
+          placeholder="Search for a character..."
+          autocomplete="off"
+        />
+        <div class="dropdown-list" id="dropdown-list"></div>
+      </div>
+
+      <div class="tips-display" id="tips-display">
+        <h2 class="section-title" id="tips-title"></h2>
+        <p id="tips-desc" style="color: var(--text-muted); margin-bottom: 1rem;"></p>
+        <div class="tips-grid" id="tips-grid"></div>
+      </div>
+
+      <div class="placeholder-message" id="placeholder">
+        <span>🎮</span>
+        <p>Select a character above to see tips and strategies</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Super Smash Bros Ultimate &copy; Nintendo. This guide is fan-made and not affiliated with Nintendo.</p>
+  </footer>
+
+  <script>
+    const CHARACTERS = [
+      'Mario', 'Donkey Kong', 'Link', 'Samus', 'Yoshi', 'Kirby', 'Fox', 'Pikachu',
+      'Luigi', 'Ness', 'Captain Falcon', 'Jigglypuff', 'Peach', 'Bowser', 'Ice Climbers',
+      'Sheik', 'Zelda', 'Dr. Mario', 'Pichu', 'Falco', 'Marth', 'Lucina', 'Young Link',
+      'Ganondorf', 'Mewtwo', 'Roy', 'Chrom', 'Mr. Game & Watch', 'Meta Knight', 'Pit',
+      'Dark Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'Squirtle', 'Ivysaur', 'Charizard',
+      'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B.',
+      'Toon Link', 'Wolf', 'Villager', 'Mega Man', 'Wii Fit Trainer', 'Rosalina', 'Little Mac',
+      'Greninja', 'Palutena', 'Pac-Man', 'Robin', 'Shulk', 'Bowser Jr.', 'Duck Hunt',
+      'Ryu', 'Ken', 'Cloud', 'Corrin', 'Bayonetta', 'Inkling', 'Ridley', 'Simon', 'Richter',
+      'King K. Rool', 'Isabelle', 'Incineroar', 'Joker', 'Hero', 'Banjo & Kazooie', 'Terry',
+      'Byleth', 'Min Min', 'Steve', 'Sephiroth', 'Pyra / Mythra', 'Kazuya', 'Sora'
+    ].sort((a, b) => a.localeCompare(b));
+
+    const TIPS_DATA = {
+      'Mario': [
+        { type: 'strategy', title: 'Fireball Zoning', content: 'Use fireball to control space and force approaches. Mix up short and long hop fireballs to keep opponents guessing.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Up-Tilt Chain', content: 'Up-tilt at low percentages leads into itself or up-air. Use at 0-30% for easy combo extensions.', moves: ['Up-Tilt', 'Up-Air'] },
+        { type: 'kill', title: 'Up-Smash Kill Confirm', content: 'Up-smash is a frame-perfect kill confirm from up-air at high %. Practice the timing for reliable kills.', moves: ['Up-Air', 'Up-Smash'] },
+        { type: 'neutral', title: 'Cape Setup', content: 'Cape reflects projectiles and can flip opponents. Use it to punish recovery or reflect dangerous projectiles.', moves: ['Side B'] },
+        { type: 'recovery', title: 'Super Jump Punch', content: 'Save your double jump for recovery mixups. The coin flip can extend combos or kill at high %!', moves: ['Up B'] }
+      ],
+      'Fox': [
+        { type: 'strategy', title: 'Laser Camping', content: 'Use blaster lasers to control neutral. Lasers force approaches and deal small damage that adds up.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Down-Throw Chain', content: 'Down-throw leads into up-air at low %. Works best at 0-20% for guaranteed damage.', moves: ['Down-Throw', 'Up-Air'] },
+        { type: 'kill', title: 'Up-Smash Breakpoint', content: 'Up-smash is your strongest kill move. Get opponents to 120-130% for kills from center stage.', moves: ['Up-Smash'] },
+        { type: 'recovery', title: 'Fire Fox Recovery', content: 'Fire Fox has multiple angles. Mix up recovery height and angle to avoid being gimpped.', moves: ['Up B'] },
+        { type: 'general', title: 'Reflector Usage', content: 'Phantasm (down-B) reflects projectiles and can be used off-stage for edgeguards.', moves: ['Down B'] }
+      ],
+      'Pikachu': [
+        { type: 'strategy', title: 'Quick Attack Mobility', content: 'Quick Attack is your best movement tool. Use it to weave through attacks and close distance quickly.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Thunder Junction', content: 'Thunder (down-B) combo from up-air or down-throw. Leads to huge damage or kills at high %.', moves: ['Up-Air', 'Down B'] },
+        { type: 'kill', title: 'Thunder Kill Setup', content: 'Up-air into Thunder is a classic kill confirm. Works best at 100-120% near the blast zone.', moves: ['Up-Air', 'Down B'] },
+        { type: 'recovery', title: 'Best Recovery in Game', content: 'Quick Attack + Thunder gives you amazing recovery. Use the mixups to survive edgeguards.', moves: ['Neutral B', 'Down B'] },
+        { type: 'neutral', title: 'Skull Bash Charging', content: 'Skull Bash (side-B) can be charged for mixups. Full charge deals 27% and has armor.', moves: ['Side B'] }
+      ],
+      'Link': [
+        { type: 'strategy', title: 'Projectile Dominance', content: 'Use boomerang, bombs, and arrows to control space. Force opponents to approach through your projectiles.', moves: ['Neutral B', 'Side B', 'Down B'] },
+        { type: 'combo', title: 'Up-Air Chain', content: 'Up-air can chain into itself at low-mid %. Use to build damage before going for kills.', moves: ['Up-Air', 'Up-Tilt'] },
+        { type: 'kill', title: 'Bomb Setup Kills', content: 'Throw bombs and follow up with attacks. The explosion can kill at high %.', moves: ['Side B', 'Forward-Smash'] },
+        { type: 'neutral', title: 'Nair Spacing', content: 'Nair is great for spacing and starting combos. Its disjointed hitbox beats many approach options.', moves: ['Nair'] },
+        { type: 'recovery', title: 'Hookshot Recovery', content: 'Hookshot is both recovery and a projectile. Use it to grab ledges from far away.', moves: ['Hookshot'] }
+      ],
+      'Sheik': [
+        { type: 'strategy', title: 'Needle Storm', content: 'Use needles to pressure and force approaches. Full charge deals massive damage. Store up to 4 needles.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Bounce Chain', content: 'Forward-air into bouncing fish is a classic combo. Works at mid percentages for good damage.', moves: ['Forward-Air', 'Down B'] },
+        { type: 'kill', title: 'Kill Percent Ranges', content: 'Sheik struggles to kill - aim for 150%+ for kills with most moves.', moves: ['Forward-Smash', 'Up-Smash'] },
+        { type: 'neutral', title: 'Shuriken Setup', content: 'Shuriken slows opponents and leads into combos. Key tool for controlling neutral.', moves: ['Neutral B'] },
+        { type: 'recovery', title: 'Vanish Mobility', content: 'Vanish (side-B) has iframe frames and teleports. Use for escapes or edgeguards.', moves: ['Side B'] }
+      ],
+      'Cloud': [
+        { type: 'strategy', title: 'Limit Charging', content: 'Build Limit throughout the match. At 3 Limit bars, your attacks become much stronger.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Limit Finisher', content: 'When at 3 Limit, Finishing Touch is a massive kill move. Charge Limit in neutral.', moves: ['Side B'] },
+        { type: 'kill', title: 'Limit Blade Mode', content: 'With 3 Limit, Forward-Smash becomes Frame 14 and kills much earlier.', moves: ['Forward-Smash'] },
+        { type: 'neutral', title: 'Clash Blade', content: 'Clash Blade absorbs projectiles and deals damage. Great for trading or approaching through zoning.', moves: ['Down B'] },
+        { type: 'recovery', title: 'Recovery Limitations', content: 'Recovery is weak without Limit. Always have at least 1 bar before approaching off-stage.', moves: ['Up B'] }
+      ],
+      'Joker': [
+        { type: 'strategy', title: 'Arsene Build', content: 'Deal damage to build Arsene meter. When active, all attacks deal increased damage and knockback.', moves: ['Eiha', 'Rebel\'s Guard'] },
+        { type: 'combo', title: 'Gun Setup', content: 'Gun shots can lead into combos. Use when Arsene is active for massive damage extensions.', moves: ['Down B', 'Forward-Air'] },
+        { type: 'kill', title: 'Arsene Kill Confirm', content: 'With Arsene, Eigaon kills very early. Build meter quickly and go aggressive when Arsene activates.', moves: ['Side B'] },
+        { type: 'neutral', title: 'Rebel\'s Guard', content: 'Rebel\'s Guard gives iframes and builds Arsene when hit. Use defensively.', moves: ['Down B'] },
+        { type: 'recovery', title: 'Grappling Hook', content: 'Grappling Hook has huge range. Mix up angles to avoid edgeguards, especially with Arsene active.', moves: ['Up B'] }
+      ],
+      'Snake': [
+        { type: 'strategy', title: 'Grenade Control', content: 'Place grenades to control space. Pick them up before they explode for combo extensions.', moves: ['Side B'] },
+        { type: 'combo', title: 'Nikita Missile', content: 'Nikita is a missile you can steer. Use it for edgeguards or mix up recovery angles.', moves: ['Up B'] },
+        { type: 'kill', title: 'C4 Setup', content: 'Place C4 on stage and detonate when opponent is near. Huge damage and kills at high %.', moves: ['Down B'] },
+        { type: 'neutral', title: 'Frag Grenades', content: 'Frag grenades bounce and can be picked up. Use bounce patterns to confuse opponents.', moves: ['Side B'] },
+        { type: 'recovery', title: 'Recovery Limitations', content: 'Nikita can be intercepted. Always have a plan B if your recovery gets read.', moves: ['Up B'] }
+      ],
+      'Sonic': [
+        { type: 'strategy', title: 'Spin Dash Pressure', content: 'Spin Dash charges and can be released for quick approaches. Forces opponents to guess.', moves: ['Side B'] },
+        { type: 'combo', title: 'Spin Attack Extensions', content: 'Spin Attack can be used in combos. Hit spin dash charge at the right time for combos.', moves: ['Down B', 'Side B'] },
+        { type: 'kill', title: 'Home-Run Combo', content: 'Home-Run Bat is a powerful kill move. Get opponents to 100-120% for kills from center.', moves: ['Up B'] },
+        { type: 'neutral', title: 'Sprinthog Mobility', content: 'Sprinthog is a dash that goes under opponents. Great for surprising approaches.', moves: ['Neutral B'] },
+        { type: 'recovery', title: 'Spin Dash Recovery', content: 'Spin Dash off-stage is a fast, horizontal recovery. Hard to intercept due to speed.', moves: ['Side B'] }
+      ],
+      'Incineroar': [
+        { type: 'strategy', title: 'Command Grabs', content: 'Lariat is a command grab with super armor. Use it to absorb hits and grab opponents.', moves: ['Side B'] },
+        { type: 'combo', title: 'Belly Drum Buff', content: 'Belly Drum halves your HP but massively increases damage. Use when you have a lead or at high %.', moves: ['Down B'] },
+        { type: 'kill', title: 'Strongest Smashes', content: 'Incineroar has the strongest smash attacks in the game. Forward-smash can kill at 70%!', moves: ['Forward-Smash', 'Side B'] },
+        { type: 'neutral', title: 'Slow but Powerful', content: 'Incineroar is slow but hits hard. Play patient and punish mistakes with your range.', moves: ['Forward-Tilt', 'Up-Tilt'] },
+        { type: 'recovery', title: 'Recovery Weakness', content: 'Recovery has poor horizontal movement. Keep one jump and side-B to recover more safely.', moves: ['Up B'] }
+      ],
+      'Inkling': [
+        { type: 'strategy', title: 'Ink Management', content: 'Ink builds up with attacks. Splattershot uses the most ink. Manage your ink carefully.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Ink Coverage', content: 'When inked, attacks deal more damage. Ink a percentage then go aggressive.', moves: ['Neutral B', 'Forward-Air'] },
+        { type: 'kill', title: 'Splat-Bomb Kills', content: 'Splat-Bomb kills early when opponent has your ink color. Paint the stage first.', moves: ['Side B'] },
+        { type: 'neutral', title: 'Roller Movement', content: 'Ink Roller is movement and an attack. Roll horizontally for stage control.', moves: ['Down B'] },
+        { type: 'recovery', title: 'Super Jump Recovery', content: 'Super Jump goes very high. Use it as a vertical recovery or to surprise opponents up high.', moves: ['Up B'] }
+      ],
+      'Marth': [
+        { type: 'strategy', title: 'Tipper Mechanic', content: 'Tip of the sword deals more damage and knockback. Spacing is crucial - learn the tipper range.', moves: ['Forward-Tilt', 'Forward-Smash'] },
+        { type: 'combo', title: 'Tipper Confirm', content: 'Tipper forward-air can lead into up-smash or other kills. Practice spacing for consistent confirms.', moves: ['Forward-Air', 'Up-Smash'] },
+        { type: 'kill', title: 'Tipper Kills Early', content: 'Tipper forward-smash kills around 100%. Forward-tipper kills around 120%. Master spacing!', moves: ['Forward-Smash', 'Forward-Tilt'] },
+        { type: 'neutral', title: 'Dolphin Slash', content: 'Dolphin Slash is a vertical kill option with iframes. Use for recoveries or ledgetrapping.', moves: ['Up B'] },
+        { type: 'recovery', title: 'Counter Recovery', content: 'Counter can reflect attacks during recovery. Risky but can save stocks.', moves: ['Down B'] }
+      ],
+      'Lucina': [
+        { type: 'strategy', title: 'Consistent Sword', content: 'No tipper mechanic - all hits deal equal damage. More forgiving than Marth but less reward.', moves: ['Forward-Tilt', 'Forward-Smash'] },
+        { type: 'combo', title: 'Nair Chains', content: 'Nair can chain into itself at low-mid %. Use to build damage safely.', moves: ['Nair', 'Forward-Air'] },
+        { type: 'kill', title: 'Kill with Forward-Smash', content: 'Forward-smash kills around 110-120%. Safer than Marth since all hits are equal.', moves: ['Forward-Smash', 'Up-Smash'] },
+        { type: 'neutral', title: 'Dolphin Slash Approach', content: 'Use Dolphin Slash to approach from below or as an anti-air.', moves: ['Up B'] },
+        { type: 'recovery', title: 'Reverse Edge', content: 'Reverse edgeguard with forward-air. Can spike opponents who recover high.', moves: ['Forward-Air'] }
+      ],
+      'Captain Falcon': [
+        { type: 'strategy', title: 'Aggressive Playstyle', content: 'Captain Falcon rewards aggression. Close distance quickly and pressure with speed.', moves: ['Dash Attack', 'Nair'] },
+        { type: 'combo', title: 'Down-Throw Combos', content: 'Down-throw into up-air or knee at low %. The knee kills at high %.', moves: ['Down-Throw', 'Up-Air', 'Forward-Air'] },
+        { type: 'kill', title: 'Knee to Kill', content: 'Forward-air (Knee) is your strongest move. Kills around 80-100% with proper positioning.', moves: ['Forward-Air'] },
+        { type: 'neutral', title: 'Falcon Punch', content: 'Falcon Punch is a frame 33 kill move. Use as a punish or callout - not in neutral.', moves: ['Side B'] },
+        { type: 'recovery', title: 'Falcon Dive', content: 'Falcon Dive kills opponents who hit you. Use it to gimp recoveries or trade hits.', moves: ['Up B'] }
+      ],
+      'Samus': [
+        { type: 'strategy', title: 'Charge Shot', content: 'Charge your charge shot in neutral. Full charge deals massive damage and kills.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Missile Combos', content: 'Missiles lead into attacks. Use homing missiles to force reactions.', moves: ['Side B', 'Forward-Air'] },
+        { type: 'kill', title: 'Charge Shot Kill', content: 'Full charge shot kills around 70-80%. Hide behind platforms to charge safely.', moves: ['Neutral B'] },
+        { type: 'neutral', title: 'ZAir Spacing', content: 'Zair is a great spacing tool. Use it to maintain distance.', moves: ['Zair'] },
+        { type: 'recovery', title: 'Bomb Jump Recovery', content: 'Use bombs to extend recovery height. Mix up bomb jumps with regular recovery.', moves: ['Down B', 'Up B'] }
+      ],
+      'Greninja': [
+        { type: 'strategy', title: 'Water Shuriken', content: 'Water Shuriken is a multi-hit projectile. Great for pressuring and building damage.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Shadow Sneak', content: 'Shadow Sneak has startup invincibility. Use it as a surprise approach or punish.', moves: ['Side B'] },
+        { type: 'kill', title: 'Up-B Kill Confirm', content: 'Hydro Pump kills at high % when used off-stage. Also great for recovery mixups.', moves: ['Up B'] },
+        { type: 'neutral', title: 'Nair Mobility', content: 'Nair is great for spacing and approach. Can cross up opponents for mixups.', moves: ['Nair', 'Forward-Air'] },
+        { type: 'recovery', title: 'Hydro Pump Recovery', content: 'Hydro Pump has huge horizontal and vertical range. Use angles to avoid edgeguards.', moves: ['Up B'] }
+      ],
+      'Ike': [
+        { type: 'strategy', title: 'Eruption Pressure', content: 'Eruption is a chargeable attack. Full charge kills and deals great damage.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Quick Draw Combos', content: 'Quick Draw can combo into itself or aerials at low %. Use for pressure.', moves: ['Side B', 'Nair'] },
+        { type: 'kill', title: 'Eruption Kill', content: 'Full charge Eruption kills around 70%. Charge it behind platforms for safety.', moves: ['Neutral B'] },
+        { type: 'neutral', title: 'Sword Range', content: 'Ike\'s sword has great range. Use forward-tilt to wall out opponents.', moves: ['Forward-Tilt', 'Forward-Smash'] },
+        { type: 'recovery', title: 'Recovery is Linear', content: 'Aether goes straight up. Vulnerable to edgeguards. Use Quick Draw for horizontal mixups.', moves: ['Up B', 'Side B'] }
+      ],
+      'Ganondorf': [
+        { type: 'strategy', title: 'Heavy Hitter', content: 'Ganondorf hits incredibly hard but is slow. Play patient and punish mistakes.', moves: ['Forward-Tilt', 'Forward-Smash'] },
+        { type: 'combo', title: 'Down-Throw Setup', content: 'Down-throw can lead into up-air at low %. Setup for your heavy attacks.', moves: ['Down-Throw', 'Up-Air'] },
+        { type: 'kill', title: 'Warlock Punch', content: 'Warlock Punch kills very early but is slow (frame 33). Use as a hard read punish.', moves: ['Side B'] },
+        { type: 'neutral', title: 'Flame Choke', content: 'Flame Choke is a command grab. Good for ledgetrapping and killing.', moves: ['Up B'] },
+        { type: 'recovery', title: 'Terrible Recovery', content: 'Recovery is very poor. Ganondorf is easy to gimp. Be careful off-stage.', moves: ['Up B'] }
+      ],
+      'Bowser': [
+        { type: 'strategy', title: 'Armor Tank', content: 'Bowser has super armor on many moves. Use it to trade hits and overwhelm opponents.', moves: ['Up B', 'Side B'] },
+        { type: 'combo', title: 'Shell Shuffle', content: 'Shell Shuffle can combo into itself or aerials. Use for movement and pressure.', moves: ['Down B', 'Forward-Air'] },
+        { type: 'kill', title: 'Forward-Smash Power', content: 'Forward-smash kills around 90%. One of the strongest in the game.', moves: ['Forward-Smash'] },
+        { type: 'neutral', title: 'Fire Breath', content: 'Fire Breath controls space. Use angles to hit opponents on platforms.', moves: ['Neutral B'] },
+        { type: 'recovery', title: 'Flying Slam Recovery', content: 'Flying Slam has poor horizontal. Vulnerable to edgeguards.', moves: ['Up B'] }
+      ],
+      'King K. Rool': [
+        { type: 'strategy', title: 'Gunner Setup', content: 'Gunner shoots projectiles. Great for controlling space and building damage.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Propellerpack', content: 'Propellerpack can combo into aerials. Use it for vertical pressure.', moves: ['Up B', 'Forward-Air'] },
+        { type: 'kill', title: 'Blunderbuss', content: 'Blunderbuss can suck in opponents. Kills early when opponent is at high %.', moves: ['Side B'] },
+        { type: 'neutral', title: 'Crown Return', content: 'Throw crown and it returns like a boomerang. Great for edgeguarding.', moves: ['Side B'] },
+        { type: 'recovery', title: 'Recovery is Linear', content: 'Propellerpack goes mostly vertical. Use crown for horizontal movement off-stage.', moves: ['Up B', 'Side B'] }
+      ],
+      'Hero': [
+        { type: 'strategy', title: 'Command Menu', content: 'Command Menu gives random specials. Some are very powerful - some are useless.', moves: ['Down B'] },
+        { type: 'combo', title: 'Hocus Pocus', content: 'Hocus Pocus can give powerful buffs. The Sizz spell is a strong kill move.', moves: ['Down B', 'Sizz'] },
+        { type: 'kill', title: 'Magic Burst', content: 'Magic Burst kills at high %. Charge it up and unleash for huge damage.', moves: ['Down B'] },
+        { type: 'neutral', title: 'Kazap', content: 'Kazap is a multi-hit lightning attack. Can catch multiple opponents.', moves: ['Down B'] },
+        { type: 'recovery', title: 'Zoom Recovery', content: 'Zoom teleports you to the stage. Great for recovering but is RNG.', moves: ['Down B'] }
+      ],
+      'Steve': [
+        { type: 'strategy', title: 'Resource Management', content: 'Mine materials to craft tools. Wood for recovery, stone for power, iron for tools.', moves: ['Neutral B', 'Down B'] },
+        { type: 'combo', title: 'Block Building', content: 'Place blocks to create platforms or trap opponents. Use for stage control.', moves: ['Down B', 'Forward-Air'] },
+        { type: 'kill', title: 'Iron Sword', content: 'Craft an iron sword for powerful kill moves. Strongest when fully upgraded.', moves: ['Down B', 'Forward-Smash'] },
+        { type: 'neutral', title: 'Diamond Armor', content: 'Diamond armor gives resistance. Use resources strategically.', moves: ['Down B'] },
+        { type: 'recovery', title: 'Elytra Flight', content: 'Elytra gives amazing horizontal recovery. Build diamond early!', moves: ['Down B'] }
+      ],
+      'Pyra / Mythra': [
+        { type: 'strategy', title: 'Switch Forms', content: 'Mythra is fast with weak kills. Pyra is slow with strong kills. Switch based on situation.', moves: ['Neutral B'] },
+        { type: 'combo', title: 'Mythra Nair', content: 'Mythra Nair chains easily at low %. Build damage then switch to Pyra for kills.', moves: ['Nair', 'Switch'] },
+        { type: 'kill', title: 'Pyra Blade', content: 'Pyra Forward-smash kills very early. Get into Pyra form at kill percent.', moves: ['Forward-Smash'] },
+        { type: 'neutral', title: 'Mythra Speed', content: 'Stay in Mythra form in neutral. Switch to Pyra when you want to kill.', moves: ['Switch'] },
+        { type: 'recovery', title: 'Dual Recovery', content: 'Mythra has good vertical recovery. Pyra has powerful edgeguards. Use form that fits.', moves: ['Up B'] }
+      ],
+      'Byleth': [
+        { type: 'strategy', title: 'Weapon Triangle', content: 'Byleth has axe (slow/strong), lance (range), and sword. Use range to wall out opponents.', moves: ['Forward-Smash', 'Forward-Tilt'] },
+        { type: 'combo', title: 'Nair Chain', content: 'Nair chains at low-mid %. Use for damage building before kills.', moves: ['Nair', 'Forward-Air'] },
+        { type: 'kill', title: 'Axe Kill', content: 'Forward-smash with axe kills very early. Charge it or use as punish.', moves: ['Forward-Smash'] },
+        { type: 'neutral', title: 'Fire', content: 'Fire is a multi-hit projectile. Good for pressuring and combos.', moves: ['Neutral B'] },
+        { type: 'recovery', title: 'Recovery Limitations', content: 'Recovery goes high but not far horizontally. Vulnerable to edgeguards.', moves: ['Up B'] }
+      ],
+      'Min Min': [
+        { type: 'strategy', title: 'ARMS Control', content: 'ARMS extend for range. Use different ARMS for different matchups.', moves: ['Forward-Tilt', 'Up-Tilt', 'Neutral B'] },
+        { type: 'combo', title: 'ARMS Drag', content: 'ARMS can drag opponents. Use this for edgeguards or pulling them into attacks.', moves: ['Forward-Tilt', 'Forward-Air'] },
+        { type: 'kill', title: 'Forward-Smash Power', content: 'Forward-smash kills very early. Hold it for charged kills or use as quick punish.', moves: ['Forward-Smash'] },
+        { type: 'neutral', title: 'Ramen', content: 'Ramen heals over time. Use between stocks or when you have a lead.', moves: ['Down B'] },
+        { type: 'recovery', title: 'Dr. Kryroid', content: 'Dr. Kryroid has poor horizontal. Use ARMS to push yourself further.', moves: ['Up B'] }
+      ],
+      'Sephiroth': [
+        { type: 'strategy', title: 'Masamune Range', content: 'Masamune sword has incredible range. Space opponents out and punish mistakes.', moves: ['Forward-Tilt', 'Forward-Smash'] },
+        { type: 'combo', title: 'Flare Combos', content: 'Flare can combo into aerials. Use for damage extensions.', moves: ['Neutral B', 'Forward-Air'] },
+        { type: 'kill', title: 'October Rain', content: 'October Rain is a multi-hit kill move. Gets stronger with more stored energy.', moves: ['Down B'] },
+        { type: 'neutral', title: 'Scintilla', content: 'Scintilla is a counter with long range. Use it to punish attacks.', moves: ['Side B'] },
+        { type: 'recovery', title: 'Shadow Flare', content: 'Shadow Flare gives invincibility frames. Hard to intercept when used correctly.', moves: ['Up B'] }
+      ]
+    };
+
+    const genericTips = [
+      { type: 'general', title: 'Fundamentals Matter Most', content: 'No matter what character you play, fundamentals like spacing, timing, and reading your opponent will always be more important than advanced tech. Master the basics first.', moves: [] },
+      { type: 'general', title: 'Watch Your Opponent', content: 'Pay attention to your opponent\'s habits. Everyone has patterns - spot them and punish accordingly.', moves: [] },
+      { type: 'general', title: 'Control the Stage', content: 'Stage control is huge in Smash. Use platforms, projectiles, and positioning to force opponents where you want them.', moves: [] },
+      { type: 'general', title: 'Recovery Resources', content: 'Know your recovery options. Jumps, Up-B, and other recovery moves are limited - use them wisely.', moves: [] },
+      { type: 'general', title: 'Percent Matters', content: 'Know what percentage your kill moves start working. Play around those percents - be aggressive at kill percent, defensive when behind.', moves: [] }
+    ];
+
+    const characterInput = document.getElementById('character');
+    const dropdownList = document.getElementById('dropdown-list');
+    const tipsDisplay = document.getElementById('tips-display');
+    const tipsTitle = document.getElementById('tips-title');
+    const tipsDesc = document.getElementById('tips-desc');
+    const tipsGrid = document.getElementById('tips-grid');
+    const placeholder = document.getElementById('placeholder');
+
+    let selectedCharacterIdx = -1;
+    let highlightedOptionIdx = -1;
+
+    function renderDropdownOptions(filter = '') {
+      const filterLower = filter.toLowerCase().trim();
+      const filtered = CHARACTERS.map((name, i) => ({
+        name,
+        idx: i,
+        visible: filterLower === '' || name.toLowerCase().includes(filterLower)
+      }));
+
+      const visibleCount = filtered.filter(f => f.visible).length;
+
+      if (visibleCount === 0) {
+        dropdownList.innerHTML = '<div class="dropdown-empty">No characters found</div>';
+        dropdownList.classList.add('visible');
+        return;
+      }
+
+      dropdownList.innerHTML = filtered.map((item, i) => {
+        if (!item.visible) return '';
+        const isHighlighted = i === highlightedOptionIdx;
+        return `<div class="dropdown-option ${isHighlighted ? 'highlighted' : ''}" data-idx="${item.idx}">${item.name}</div>`;
+      }).filter(html => html).join('');
+
+      dropdownList.querySelectorAll('.dropdown-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const idx = parseInt(opt.dataset.idx, 10);
+          selectCharacter(idx);
+        });
+      });
+
+      dropdownList.classList.add('visible');
+    }
+
+    function selectCharacter(idx) {
+      selectedCharacterIdx = idx;
+      characterInput.value = CHARACTERS[idx];
+      dropdownList.classList.remove('visible');
+      highlightedOptionIdx = -1;
+      renderTips(idx);
+    }
+
+    function renderTips(characterIdx) {
+      const name = CHARACTERS[characterIdx];
+      const tips = TIPS_DATA[name] || genericTips;
+      const hasSpecificTips = !!TIPS_DATA[name];
+
+      placeholder.style.display = 'none';
+      tipsDisplay.classList.add('visible');
+
+      tipsTitle.textContent = hasSpecificTips ? `${name} Tips` : `${name} - General Tips`;
+      tipsDesc.textContent = hasSpecificTips 
+        ? `Character-specific strategies and combos for ${name}.`
+        : `General tips for all characters. Play ${name} based on your matchup knowledge.`;
+
+      tipsGrid.innerHTML = tips.map(tip => {
+        const movesHtml = tip.moves.length 
+          ? `<div class="moves">${tip.moves.map(m => `<span class="move-tag">${m}</span>`).join('')}</div>` 
+          : '';
+        return `
+          <div class="tip-card ${tip.type}">
+            <h3>${tip.title}</h3>
+            <p>${tip.content}</p>
+            ${movesHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    characterInput.addEventListener('focus', () => {
+      if (characterInput.value === '') {
+        renderDropdownOptions('');
+      } else {
+        renderDropdownOptions(characterInput.value);
+      }
+    });
+
+    characterInput.addEventListener('input', (e) => {
+      const query = e.target.value;
+      highlightedOptionIdx = -1;
+      renderDropdownOptions(query);
+    });
+
+    characterInput.addEventListener('keydown', (e) => {
+      const options = Array.from(dropdownList.querySelectorAll('.dropdown-option'));
+      if (options.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        highlightedOptionIdx = Math.min(highlightedOptionIdx + 1, options.length - 1);
+        options.forEach((opt, i) => opt.classList.toggle('highlighted', i === highlightedOptionIdx));
+        options[highlightedOptionIdx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        highlightedOptionIdx = Math.max(highlightedOptionIdx - 1, -1);
+        options.forEach((opt, i) => opt.classList.toggle('highlighted', i === highlightedOptionIdx));
+        if (highlightedOptionIdx >= 0) {
+          options[highlightedOptionIdx]?.scrollIntoView({ block: 'nearest' });
+        }
+      } else if (e.key === 'Enter' && highlightedOptionIdx >= 0) {
+        e.preventDefault();
+        const idx = parseInt(options[highlightedOptionIdx].dataset.idx, 10);
+        selectCharacter(idx);
+      } else if (e.key === 'Escape') {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('character-dropdown');
+      if (!dropdown.contains(e.target)) {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }
+    });
+
+    characterInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        dropdownList.classList.remove('visible');
+        highlightedOptionIdx = -1;
+      }, 200);
+    });
+  </script>
+</body>
+</html>
