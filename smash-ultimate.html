@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clash Labs — Fighting Game Hub</title>
+  <title>Super Smash Bros Ultimate — Clash Labs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@
 
     .hero {
       background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
-      padding: 4rem 1.5rem 5rem;
+      padding: 3rem 1.5rem 4rem;
       text-align: center;
       border-bottom: 3px solid var(--accent-gold);
       position: relative;
@@ -100,34 +100,72 @@
 
     h1 {
       font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(3rem, 10vw, 5rem);
+      font-size: clamp(2.5rem, 8vw, 4rem);
       letter-spacing: 0.1em;
       background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
       position: relative;
       animation: glow 3s ease-in-out infinite;
       filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
     }
 
     .subtitle {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: var(--accent-blue);
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       text-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero-logo {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      animation: float 4s ease-in-out infinite;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
     }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover {
+      color: var(--accent-gold);
+      background: rgba(255, 215, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .nav a:hover::before { left: 100%; }
 
     main {
       max-width: 1000px;
@@ -159,13 +197,13 @@
       margin: 0 auto;
     }
 
-    .games-grid {
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
     }
 
-    .game-card {
+    .feature-card {
       background: linear-gradient(135deg, rgba(26, 26, 36, 0.95) 0%, rgba(30, 30, 45, 0.95) 100%);
       backdrop-filter: blur(10px);
       border: 2px solid var(--border);
@@ -174,54 +212,44 @@
       text-decoration: none;
       color: var(--text);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
       animation: slideUp 0.6s ease-out backwards;
     }
 
-    .game-card:nth-child(1) { animation-delay: 0.1s; }
-    .game-card:nth-child(2) { animation-delay: 0.15s; }
-    .game-card:nth-child(3) { animation-delay: 0.2s; }
-    .game-card:nth-child(4) { animation-delay: 0.25s; }
-    .game-card:nth-child(5) { animation-delay: 0.3s; }
-    .game-card:nth-child(6) { animation-delay: 0.35s; }
-    .game-card:nth-child(7) { animation-delay: 0.4s; }
-    .game-card:nth-child(8) { animation-delay: 0.45s; }
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
 
-    .game-card:hover {
+    .feature-card:hover {
       border-color: var(--accent-gold);
       transform: translateY(-8px);
       box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
     }
 
-    .game-icon {
-      font-size: 3.5rem;
-      flex-shrink: 0;
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
     }
 
-    .game-info h2 {
+    .feature-card h2 {
       font-family: "Bebas Neue", sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       letter-spacing: 0.05em;
       color: var(--accent-gold);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
     }
 
-    .game-info p {
+    .feature-card p {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
 
-    .game-card.smash { border-top: 4px solid var(--accent-blue); }
-    .game-card.sfv { border-top: 4px solid var(--accent-red); }
-    .game-card.sfv2 { border-top: 4px solid #00e5ff; }
-    .game-card.tekken { border-top: 4px solid #ff6b6b; }
-    .game-card.gg { border-top: 4px solid #ff4444; }
-    .game-card.kof { border-top: 4px solid #ffd700; }
-    .game-card.mvci { border-top: 4px solid #9c27b0; }
-    .game-card.mb { border-top: 4px solid #e91e63; }
+    .feature-card.counter { border-top: 4px solid var(--accent-green); }
+    .feature-card.combos { border-top: 4px solid var(--accent-blue); }
+    .feature-card.tips { border-top: 4px solid var(--accent-purple); }
+    .feature-card.faq { border-top: 4px solid var(--accent-orange); }
 
     footer {
       text-align: center;
@@ -237,94 +265,62 @@
     footer a:hover { text-decoration: underline; }
 
     @media (max-width: 600px) {
-      .games-grid { grid-template-columns: 1fr; }
+      .nav { gap: 0.75rem; }
+      .features-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header class="hero">
     <div class="hero-content">
-      <div class="hero-logo">🎮</div>
-      <h1>CLASH LABS</h1>
-      <p class="subtitle">Your Fighting Game Hub</p>
+      <div class="hero-logo">🍄</div>
+      <h1>SMASH ULTIMATE</h1>
+      <p class="subtitle">Clash Labs</p>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="matchups.html">Counter Picker</a>
+        <a href="combos.html">Combos & Moves</a>
+        <a href="tips.html">Tips & Tricks</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
     </div>
   </header>
 
   <main>
     <section class="hero-section">
-      <h2>Choose Your Game</h2>
-      <p>Select a fighting game to access character guides, combos, matchups, and strategies.</p>
+      <h2>Master Your Game</h2>
+      <p>Everything you need to improve your Super Smash Bros Ultimate gameplay.</p>
     </section>
 
-    <div class="games-grid">
-      <a href="smash-ultimate.html" class="game-card smash">
-        <span class="game-icon">🍄</span>
-        <div class="game-info">
-          <h2>Super Smash Bros Ultimate</h2>
-          <p>Character matchups, combos, and tips for the ultimate Nintendo crossover fighter.</p>
-        </div>
+    <div class="features-grid">
+      <a href="matchups.html" class="feature-card counter">
+        <span class="feature-icon">⚔️</span>
+        <h2>Counter Picker</h2>
+        <p>Find the best character matchups against your opponent. See which characters counter your opponent.</p>
       </a>
 
-      <a href="#" class="game-card sfv">
-        <span class="game-icon">🥊</span>
-        <div class="game-info">
-          <h2>Street Fighter V</h2>
-          <p>Frame data, combos, and matchup guides for Capcom's legendary fighting game.</p>
-        </div>
+      <a href="combos.html" class="feature-card combos">
+        <span class="feature-icon">🔥</span>
+        <h2>Combos & Moves</h2>
+        <p>Learn character-specific combos, kill confirms, and move lists.</p>
       </a>
 
-      <a href="#" class="game-card sfv2">
-        <span class="game-icon">🔥</span>
-        <div class="game-info">
-          <h2>Street Fighter 6</h2>
-          <p>Modern controls, character guides, and competitive strategies for the latest entry.</p>
-        </div>
+      <a href="tips.html" class="feature-card tips">
+        <span class="feature-icon">💡</span>
+        <h2>Tips & Tricks</h2>
+        <p>Get expert strategies, neutral game tips, recovery advice, and gameplay improvements.</p>
       </a>
 
-      <a href="#" class="game-card tekken">
-        <span class="game-icon">🥋</span>
-        <div class="game-info">
-          <h2>Tekken 8</h2>
-          <p>Move lists, combo guides, and matchup analysis for the King of Iron Fist Tournament.</p>
-        </div>
-      </a>
-
-      <a href="#" class="game-card gg">
-        <span class="game-icon">⚡</span>
-        <div class="game-info">
-          <h2>Guilty Gear Strive</h2>
-          <p>Advanced combos, layer mechanics, and character-specific strategies.</p>
-        </div>
-      </a>
-
-      <a href="#" class="game-card kof">
-        <span class="game-icon">👊</span>
-        <div class="game-info">
-          <h2>The King of Fighters XV</h2>
-          <p>Team compositions, combo routes, and matchup guides for KOF.</p>
-        </div>
-      </a>
-
-      <a href="#" class="game-card mvci">
-        <span class="game-icon">🦸</span>
-        <div class="game-info">
-          <h2>Marvel vs Capcom Collection</h2>
-          <p>Classic combo threads and character guides for the iconic crossover series.</p>
-        </div>
-      </a>
-
-      <a href="#" class="game-card mb">
-        <span class="game-icon">😈</span>
-        <div class="game-info">
-          <h2>Melty Blood: Type Lumina</h2>
-          <p>Moon skills, unique systems, and character guides for the TYPE-MOON fighter.</p>
-        </div>
+      <a href="faq.html" class="feature-card faq">
+        <span class="feature-icon">❓</span>
+        <h2>FAQ</h2>
+        <p>Answers to common questions about Super Smash Bros Ultimate.</p>
       </a>
     </div>
   </main>
 
   <footer>
-    <p>Clash Labs &copy; 2026. Fighting game content is fan-made and not affiliated with rights holders.</p>
+    <p>Super Smash Bros Ultimate &copy; Nintendo. This site is fan-made and not affiliated with Nintendo.</p>
   </footer>
 </body>
 </html>
