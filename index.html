@@ -188,6 +188,7 @@
     .game-card:nth-child(6) { animation-delay: 0.35s; }
     .game-card:nth-child(7) { animation-delay: 0.4s; }
     .game-card:nth-child(8) { animation-delay: 0.45s; }
+    .game-card:nth-child(9) { animation-delay: 0.5s; }
 
     .game-card:hover {
       border-color: var(--accent-gold);
@@ -222,6 +223,34 @@
     .game-card.kof { border-top: 4px solid #ffd700; }
     .game-card.mvci { border-top: 4px solid #9c27b0; }
     .game-card.mb { border-top: 4px solid #e91e63; }
+    .game-card.apex { border-top: 4px solid #da292a; }
+
+    .coming-soon-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent-gold);
+      color: var(--bg-dark);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .game-card {
+      position: relative;
+    }
+
+    .game-card.coming-soon {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .game-card.coming-soon:hover {
+      transform: none;
+      box-shadow: none;
+    }
 
     footer {
       text-align: center;
@@ -265,60 +294,76 @@
         </div>
       </a>
 
-      <a href="#" class="game-card sfv">
+      <a href="#" class="game-card sfv coming-soon">
         <span class="game-icon">🥊</span>
         <div class="game-info">
           <h2>Street Fighter V</h2>
           <p>Frame data, combos, and matchup guides for Capcom's legendary fighting game.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
 
-      <a href="#" class="game-card sfv2">
+      <a href="#" class="game-card sfv2 coming-soon">
         <span class="game-icon">🔥</span>
         <div class="game-info">
           <h2>Street Fighter 6</h2>
           <p>Modern controls, character guides, and competitive strategies for the latest entry.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
 
-      <a href="#" class="game-card tekken">
+      <a href="#" class="game-card tekken coming-soon">
         <span class="game-icon">🥋</span>
         <div class="game-info">
           <h2>Tekken 8</h2>
           <p>Move lists, combo guides, and matchup analysis for the King of Iron Fist Tournament.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
 
-      <a href="#" class="game-card gg">
+      <a href="#" class="game-card gg coming-soon">
         <span class="game-icon">⚡</span>
         <div class="game-info">
           <h2>Guilty Gear Strive</h2>
           <p>Advanced combos, layer mechanics, and character-specific strategies.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
 
-      <a href="#" class="game-card kof">
+      <a href="#" class="game-card kof coming-soon">
         <span class="game-icon">👊</span>
         <div class="game-info">
           <h2>The King of Fighters XV</h2>
           <p>Team compositions, combo routes, and matchup guides for KOF.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
 
-      <a href="#" class="game-card mvci">
+      <a href="#" class="game-card mvci coming-soon">
         <span class="game-icon">🦸</span>
         <div class="game-info">
           <h2>Marvel vs Capcom Collection</h2>
           <p>Classic combo threads and character guides for the iconic crossover series.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
 
-      <a href="#" class="game-card mb">
+      <a href="#" class="game-card mb coming-soon">
         <span class="game-icon">😈</span>
         <div class="game-info">
           <h2>Melty Blood: Type Lumina</h2>
           <p>Moon skills, unique systems, and character guides for the TYPE-MOON fighter.</p>
         </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
+      </a>
+
+      <a href="#" class="game-card apex coming-soon">
+        <span class="game-icon">🔺</span>
+        <div class="game-info">
+          <h2>Apex Legends</h2>
+          <p>Character abilities, tier lists, and loadout guides for Respawn's battle royale.</p>
+        </div>
+        <span class="coming-soon-badge">COMING SOON!</span>
       </a>
     </div>
   </main>
